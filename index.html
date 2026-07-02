@@ -109,6 +109,10 @@ body { font-family: var(--font-sans); background: var(--surface-0); color: var(-
 .btn-save { padding: 7px 16px; border-radius: var(--radius); border: none; background: #2a78d6; font-size: 13px; color: #fff; cursor: pointer; font-family: var(--font-sans); font-weight: 500; }
 .btn-danger { padding: 7px 16px; border-radius: var(--radius); border: none; background: #e53935; font-size: 13px; color: #fff; cursor: pointer; font-family: var(--font-sans); }
 .loading-row { text-align: center; padding: 2rem; color: var(--text-muted); font-size: 13px; }
+.filter-chips { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1rem; }
+.chip { padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 500; cursor: pointer; border: 0.5px solid var(--border-strong); background: var(--surface-1); color: var(--text-secondary); transition: all 0.15s; white-space: nowrap; }
+.chip:hover { background: var(--surface-0); }
+.chip.active { background: #2a78d6; color: #fff; border-color: #2a78d6; }
 .empty-state { text-align: center; padding: 3rem 1rem; color: var(--text-muted); font-size: 13px; }
 .empty-state i { font-size: 32px; display: block; margin-bottom: 8px; }
 @media (max-width: 640px) {
@@ -151,6 +155,16 @@ body { font-family: var(--font-sans); background: var(--surface-0); color: var(-
         <button class="add-btn" onclick="openVendorModal()"><i class="ti ti-plus"></i> Add vendor</button>
       </div>
       <div class="search-bar"><i class="ti ti-search"></i><input type="text" placeholder="Search vendors…" id="vendor-search" oninput="renderVendors()"></div>
+      <div class="filter-chips" id="vendor-chips">
+        <span class="chip active" onclick="setVendorFilter('All')">All</span>
+        <span class="chip" onclick="setVendorFilter('AV')">AV</span>
+        <span class="chip" onclick="setVendorFilter('AR / VR')">AR / VR</span>
+        <span class="chip" onclick="setVendorFilter('LiDAR')">LiDAR</span>
+        <span class="chip" onclick="setVendorFilter('Logistics')">Logistics</span>
+        <span class="chip" onclick="setVendorFilter('IT')">IT</span>
+        <span class="chip" onclick="setVendorFilter('Manpower')">Manpower</span>
+        <span class="chip" onclick="setVendorFilter('General')">General</span>
+      </div>
       <div class="card-grid" id="vendor-grid"><div class="loading-row" style="grid-column:1/-1"><i class="ti ti-loader" style="font-size:20px;display:block;margin-bottom:6px;"></i>Loading vendors…</div></div>
     </div>
 
@@ -167,6 +181,18 @@ body { font-family: var(--font-sans); background: var(--surface-0); color: var(-
         <button class="add-btn" onclick="openInvModal()"><i class="ti ti-plus"></i> Add item</button>
       </div>
       <div class="search-bar"><i class="ti ti-search"></i><input type="text" placeholder="Search equipment…" id="inv-search" oninput="renderInventory()"></div>
+      <div class="filter-chips" id="inv-chips">
+        <span class="chip active" onclick="setInvFilter('All')">All</span>
+        <span class="chip" onclick="setInvFilter('Available')">Available</span>
+        <span class="chip" onclick="setInvFilter('Deployed')">Deployed</span>
+        <span class="chip" onclick="setInvFilter('Maintenance')">Maintenance</span>
+        <span class="chip" onclick="setInvFilter('LiDAR')">LiDAR</span>
+        <span class="chip" onclick="setInvFilter('AR / VR')">AR / VR</span>
+        <span class="chip" onclick="setInvFilter('AV')">AV</span>
+        <span class="chip" onclick="setInvFilter('Camera / DSLR')">Camera</span>
+        <span class="chip" onclick="setInvFilter('LED / Display')">LED</span>
+        <span class="chip" onclick="setInvFilter('Laptop / PC')">Laptop / PC</span>
+      </div>
       <div style="overflow-x:auto;">
         <table class="inv-table">
           <thead><tr><th style="width:50px;"></th><th>Item</th><th>Type</th><th>Serial / ID</th><th>Assigned to</th><th>Status</th><th style="width:60px;"></th></tr></thead>
@@ -301,6 +327,19 @@ const AVCOL = { 'AV':['#e6f1fb','#185fa5'],'AR / VR':['#e1f5ee','#0f6e56'],'Logi
 
 let vendors = [], inventory = [], tasks = [];
 let editingVendorId = null, editingInvId = null;
+let activeVendorFilter = 'All', activeInvFilter = 'All';
+
+function setVendorFilter(filter) {
+  activeVendorFilter = filter;
+  document.querySelectorAll('#vendor-chips .chip').forEach(c => c.classList.toggle('active', c.textContent === filter));
+  renderVendors();
+}
+
+function setInvFilter(filter) {
+  activeInvFilter = filter;
+  document.querySelectorAll('#inv-chips .chip').forEach(c => c.classList.toggle('active', c.textContent === filter));
+  renderInventory();
+}
 
 function setSync(state, msg) {
   const el = document.getElementById('sync-status');
@@ -348,7 +387,11 @@ async function loadVendors() {
 
 function renderVendors() {
   const q = document.getElementById('vendor-search').value.toLowerCase();
-  const filtered = vendors.filter(v => [v.name,v.category,v.city,v.contact,v.address||''].join(' ').toLowerCase().includes(q));
+  const filtered = vendors.filter(v => {
+    const matchSearch = [v.name,v.category,v.city,v.contact,v.address||''].join(' ').toLowerCase().includes(q);
+    const matchFilter = activeVendorFilter === 'All' || v.category === activeVendorFilter;
+    return matchSearch && matchFilter;
+  });
   const grid = document.getElementById('vendor-grid');
   if (!filtered.length) { grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><i class="ti ti-address-book"></i>No vendors yet. Add your first one!</div>'; }
   else grid.innerHTML = filtered.map(v => {
@@ -440,7 +483,12 @@ async function loadInventory() {
 
 function renderInventory() {
   const q = document.getElementById('inv-search').value.toLowerCase();
-  const filtered = inventory.filter(i => [i.name,i.category,i.serial,i.project,i.status,i.brand||''].join(' ').toLowerCase().includes(q));
+  const statusFilters = ['Available','Deployed','Maintenance'];
+  const filtered = inventory.filter(i => {
+    const matchSearch = [i.name,i.category,i.serial,i.project,i.status,i.brand||''].join(' ').toLowerCase().includes(q);
+    const matchFilter = activeInvFilter === 'All' || i.category === activeInvFilter || i.status === activeInvFilter;
+    return matchSearch && matchFilter;
+  });
   const tbody = document.getElementById('inv-body');
   const SC = { 'Available':'status-available','Deployed':'status-deployed','Maintenance':'status-maintenance' };
   if (!filtered.length) { tbody.innerHTML = '<tr><td colspan="7" class="empty-state"><i class="ti ti-package"></i>No items yet</td></tr>'; return; }
