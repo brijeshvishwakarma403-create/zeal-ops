@@ -129,8 +129,8 @@ body { font-family: var(--font-sans); background: var(--surface-0); color: var(-
     <div class="header-left">
       <div class="logo"><i class="ti ti-bolt"></i></div>
       <div>
-        <div class="app-title">Zeal Ops Manager</div>
-        <div class="app-sub">Zeal Interactive Services</div>
+        <div class="app-title">Zeal Ops Management</div>
+        <div class="app-sub">Zeal Interactive Service</div>
       </div>
     </div>
     <div class="sync-status sync-loading" id="sync-status"><i class="ti ti-cloud"></i> Connecting…</div>
@@ -147,8 +147,8 @@ body { font-family: var(--font-sans); background: var(--surface-0); color: var(-
       <div class="stats-row">
         <div class="stat-card"><div class="stat-label">Total vendors</div><div class="stat-val" id="v-total">—</div></div>
         <div class="stat-card"><div class="stat-label">AV</div><div class="stat-val" id="v-av">—</div></div>
-        <div class="stat-card"><div class="stat-label">AR / VR</div><div class="stat-val" id="v-ar">—</div></div>
-        <div class="stat-card"><div class="stat-label">Logistics</div><div class="stat-val" id="v-log">—</div></div>
+        <div class="stat-card"><div class="stat-label">VR</div><div class="stat-val" id="v-ar">—</div></div>
+        <div class="stat-card"><div class="stat-label">Hardware</div><div class="stat-val" id="v-log">—</div></div>
       </div>
       <div class="section-header">
         <div class="section-title">Vendor directory</div>
@@ -158,11 +158,11 @@ body { font-family: var(--font-sans); background: var(--surface-0); color: var(-
       <div class="filter-chips" id="vendor-chips">
         <span class="chip active" onclick="setVendorFilter('All')">All</span>
         <span class="chip" onclick="setVendorFilter('AV')">AV</span>
-        <span class="chip" onclick="setVendorFilter('AR / VR')">AR / VR</span>
-        <span class="chip" onclick="setVendorFilter('LiDAR')">LiDAR</span>
-        <span class="chip" onclick="setVendorFilter('Logistics')">Logistics</span>
+        <span class="chip" onclick="setVendorFilter('VR')">VR</span>
+        <span class="chip" onclick="setVendorFilter('Hardware')">Hardware</span>
+        <span class="chip" onclick="setVendorFilter('Mechanical')">Mechanical</span>
         <span class="chip" onclick="setVendorFilter('IT')">IT</span>
-        <span class="chip" onclick="setVendorFilter('Manpower')">Manpower</span>
+        <span class="chip" onclick="setVendorFilter('Furniture')">Furniture</span>
         <span class="chip" onclick="setVendorFilter('General')">General</span>
       </div>
       <div class="card-grid" id="vendor-grid"><div class="loading-row" style="grid-column:1/-1"><i class="ti ti-loader" style="font-size:20px;display:block;margin-bottom:6px;"></i>Loading vendors…</div></div>
