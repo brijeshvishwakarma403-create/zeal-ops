@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zeal Ops Management</title>
+<title>Zeal Ops Manager</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -24,87 +24,84 @@
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --surface-0: #111110;
-    --surface-1: #1a1a19;
-    --surface-2: #232322;
-    --text-primary: #ffffff;
-    --text-secondary: #c3c2b7;
-    --text-muted: #898781;
-    --text-accent: #3987e5;
-    --border: rgba(255,255,255,0.10);
-    --border-strong: rgba(255,255,255,0.18);
-    --bg-accent: #0c2d50;
+    --surface-0: #111110; --surface-1: #1a1a19; --surface-2: #232322;
+    --text-primary: #ffffff; --text-secondary: #c3c2b7; --text-muted: #898781;
+    --text-accent: #3987e5; --border: rgba(255,255,255,0.10);
+    --border-strong: rgba(255,255,255,0.18); --bg-accent: #0c2d50;
   }
 }
 body { font-family: var(--font-sans); background: var(--surface-0); color: var(--text-primary); min-height: 100vh; }
-* { box-sizing: border-box; }
-
-.app { max-width: 1100px; margin: 0 auto; padding: 0 0 2rem; }
-
+.app { max-width: 1100px; margin: 0 auto; }
 .header { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.25rem; border-bottom: 0.5px solid var(--border); background: var(--surface-2); position: sticky; top: 0; z-index: 10; }
 .header-left { display: flex; align-items: center; gap: 10px; }
 .logo { width: 34px; height: 34px; background: #2a78d6; border-radius: 8px; display: flex; align-items: center; justify-content: center; }
 .logo i { font-size: 17px; color: #fff; }
-.app-title { font-size: 15px; font-weight: 500; color: var(--text-primary); }
+.app-title { font-size: 15px; font-weight: 500; }
 .app-sub { font-size: 12px; color: var(--text-muted); }
-
 .nav { display: flex; gap: 4px; padding: 0.75rem 1.25rem; border-bottom: 0.5px solid var(--border); background: var(--surface-1); }
 .nav-btn { padding: 6px 14px; border-radius: var(--radius); border: none; background: transparent; font-size: 13px; color: var(--text-secondary); cursor: pointer; display: flex; align-items: center; gap: 6px; font-family: var(--font-sans); transition: background 0.15s; }
 .nav-btn:hover { background: var(--surface-0); }
 .nav-btn.active { background: var(--bg-accent); color: var(--text-accent); font-weight: 500; }
-.nav-btn i { font-size: 15px; }
-
 .content { padding: 1.25rem; }
 .tab-hidden { display: none; }
-
 .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
-.section-title { font-size: 15px; font-weight: 500; color: var(--text-primary); }
+.section-title { font-size: 15px; font-weight: 500; }
 .add-btn { display: flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: var(--radius); border: 0.5px solid var(--border-strong); background: var(--surface-2); font-size: 13px; color: var(--text-primary); cursor: pointer; font-family: var(--font-sans); }
 .add-btn:hover { background: var(--surface-1); }
-
 .search-bar { display: flex; align-items: center; gap: 8px; background: var(--surface-1); border: 0.5px solid var(--border); border-radius: var(--radius); padding: 0 12px; margin-bottom: 1rem; }
 .search-bar i { font-size: 15px; color: var(--text-muted); }
 .search-bar input { flex: 1; border: none; background: transparent; padding: 8px 0; font-size: 13px; color: var(--text-primary); font-family: var(--font-sans); outline: none; }
-
 .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 1.25rem; }
 .stat-card { background: var(--surface-1); border-radius: var(--radius); padding: 12px; }
 .stat-label { font-size: 11px; color: var(--text-muted); margin-bottom: 4px; }
-.stat-val { font-size: 22px; font-weight: 500; color: var(--text-primary); }
+.stat-val { font-size: 22px; font-weight: 500; }
+.card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 12px; }
 
-.card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
-.vendor-card { background: var(--surface-2); border: 0.5px solid var(--border); border-radius: 12px; padding: 1rem 1.25rem; }
-.vendor-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 12px; }
-.vendor-avatar { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 500; flex-shrink: 0; }
-.vendor-info { flex: 1; margin-left: 10px; }
-.vendor-name { font-size: 14px; font-weight: 500; color: var(--text-primary); }
-.vendor-category { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
+/* VENDOR CARD */
+.vendor-card { background: var(--surface-2); border: 0.5px solid var(--border); border-radius: 12px; overflow: hidden; }
+.vendor-img-wrap { width: 100%; height: 120px; background: var(--surface-1); display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
+.vendor-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+.vendor-img-placeholder { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--text-muted); font-size: 11px; }
+.vendor-img-placeholder i { font-size: 28px; }
+.vendor-body { padding: 1rem 1.25rem; }
+.vendor-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 8px; }
+.vendor-name { font-size: 14px; font-weight: 500; }
+.vendor-sub { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
+.vendor-actions { display: flex; gap: 4px; }
 .icon-btn { width: 28px; height: 28px; border-radius: 6px; border: none; background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-muted); }
 .icon-btn:hover { background: var(--surface-1); color: var(--text-primary); }
-.vendor-detail { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-secondary); margin-top: 6px; }
-.badge { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 500; }
+.vendor-detail { display: flex; align-items: flex-start; gap: 6px; font-size: 12px; color: var(--text-secondary); margin-top: 5px; }
+.vendor-detail i { font-size: 13px; color: var(--text-muted); margin-top: 1px; flex-shrink: 0; }
+.badge { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 500; margin-top: 6px; }
 .badge-av { background: #e6f1fb; color: #185fa5; }
 .badge-ar { background: #e1f5ee; color: #0f6e56; }
 .badge-log { background: #faeeda; color: #854f0b; }
 .badge-gen { background: #eeedfe; color: #534ab7; }
 .badge-man { background: #faece7; color: #993c1d; }
+.badge-li { background: #f0e8fb; color: #6b28b5; }
+.badge-it { background: #e8f4fb; color: #0e6e8c; }
 
+/* INVENTORY TABLE */
 .inv-table { width: 100%; border-collapse: collapse; }
 .inv-table th { font-size: 11px; font-weight: 500; color: var(--text-muted); text-align: left; padding: 8px 12px; border-bottom: 0.5px solid var(--border); text-transform: uppercase; letter-spacing: 0.04em; }
-.inv-table td { font-size: 13px; color: var(--text-primary); padding: 10px 12px; border-bottom: 0.5px solid var(--border); vertical-align: middle; }
+.inv-table td { font-size: 13px; padding: 10px 12px; border-bottom: 0.5px solid var(--border); vertical-align: middle; }
 .inv-table tr:hover td { background: var(--surface-1); }
+.inv-thumb { width: 36px; height: 36px; border-radius: 6px; object-fit: cover; border: 0.5px solid var(--border); }
+.inv-thumb-placeholder { width: 36px; height: 36px; border-radius: 6px; background: var(--surface-1); border: 0.5px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--text-muted); }
 .status-pill { display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px; border-radius: 20px; font-size: 11px; font-weight: 500; }
 .status-available { background: #eaf3de; color: #3b6d11; }
 .status-deployed { background: #e6f1fb; color: #185fa5; }
 .status-maintenance { background: #fcebeb; color: #a32d2d; }
 .status-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
 
+/* TASKS */
 .task-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
 .col-header { font-size: 12px; font-weight: 500; color: var(--text-muted); padding: 6px 0; text-transform: uppercase; letter-spacing: 0.04em; display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
 .col-count { background: var(--surface-1); border: 0.5px solid var(--border); border-radius: 20px; padding: 1px 7px; font-size: 11px; color: var(--text-secondary); }
 .task-col { display: flex; flex-direction: column; gap: 8px; min-height: 80px; }
 .task-card { background: var(--surface-2); border: 0.5px solid var(--border); border-radius: 10px; padding: 10px 12px; }
 .task-card:hover { border-color: var(--border-strong); }
-.task-title { font-size: 13px; font-weight: 500; color: var(--text-primary); margin-bottom: 4px; }
+.task-title { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
 .task-meta { display: flex; align-items: center; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
 .task-pri { font-size: 10px; font-weight: 500; padding: 2px 6px; border-radius: 4px; }
 .pri-high { background: #fcebeb; color: #a32d2d; }
@@ -112,25 +109,35 @@ body { font-family: var(--font-sans); background: var(--surface-0); color: var(-
 .pri-low { background: #eaf3de; color: #3b6d11; }
 .task-due { font-size: 11px; color: var(--text-muted); display: flex; align-items: center; gap: 3px; }
 
-.modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.35); display: none; align-items: center; justify-content: center; z-index: 100; }
+/* MODAL */
+.modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.4); display: none; align-items: center; justify-content: center; z-index: 100; padding: 1rem; }
 .modal-overlay.show { display: flex; }
-.modal { background: var(--surface-2); border: 0.5px solid var(--border); border-radius: 14px; padding: 1.5rem; width: 420px; max-width: 95vw; }
-.modal-title { font-size: 15px; font-weight: 500; color: var(--text-primary); margin-bottom: 1rem; }
-.form-row { margin-bottom: 12px; }
+.modal { background: var(--surface-2); border: 0.5px solid var(--border); border-radius: 14px; padding: 1.5rem; width: 480px; max-width: 100%; max-height: 90vh; overflow-y: auto; }
+.modal-title { font-size: 15px; font-weight: 500; margin-bottom: 1.25rem; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.form-full { grid-column: 1 / -1; }
+.form-row { margin-bottom: 0; }
 .form-label { font-size: 12px; color: var(--text-muted); margin-bottom: 4px; display: block; }
 .form-input, .form-select { width: 100%; padding: 8px 10px; border: 0.5px solid var(--border-strong); border-radius: var(--radius); background: var(--surface-1); color: var(--text-primary); font-size: 13px; font-family: var(--font-sans); outline: none; }
 .form-input:focus, .form-select:focus { border-color: var(--border-accent); }
+.img-upload-area { border: 1.5px dashed var(--border-strong); border-radius: var(--radius); padding: 1rem; text-align: center; cursor: pointer; background: var(--surface-1); transition: border-color 0.15s; }
+.img-upload-area:hover { border-color: var(--border-accent); }
+.img-upload-area i { font-size: 22px; color: var(--text-muted); display: block; margin-bottom: 4px; }
+.img-upload-area span { font-size: 12px; color: var(--text-muted); }
+.img-preview { width: 100%; height: 100px; object-fit: cover; border-radius: var(--radius); display: none; }
 .modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 1.25rem; }
 .btn-cancel { padding: 7px 16px; border-radius: var(--radius); border: 0.5px solid var(--border-strong); background: transparent; font-size: 13px; color: var(--text-secondary); cursor: pointer; font-family: var(--font-sans); }
 .btn-save { padding: 7px 16px; border-radius: var(--radius); border: none; background: #2a78d6; font-size: 13px; color: #fff; cursor: pointer; font-family: var(--font-sans); font-weight: 500; }
+.btn-danger { padding: 7px 16px; border-radius: var(--radius); border: none; background: #e53935; font-size: 13px; color: #fff; cursor: pointer; font-family: var(--font-sans); font-weight: 500; }
 .empty-state { text-align: center; padding: 3rem 1rem; color: var(--text-muted); font-size: 13px; }
 .empty-state i { font-size: 32px; display: block; margin-bottom: 8px; }
+.divider { height: 0.5px; background: var(--border); margin: 1rem 0; }
 
 @media (max-width: 640px) {
   .stats-row { grid-template-columns: repeat(2, 1fr); }
   .task-cols { grid-template-columns: 1fr; }
   .card-grid { grid-template-columns: 1fr; }
-  .nav-btn span { display: none; }
+  .form-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
@@ -148,15 +155,9 @@ body { font-family: var(--font-sans); background: var(--surface-0); color: var(-
   </div>
 
   <div class="nav">
-    <button class="nav-btn active" onclick="switchTab('vendors')" id="nav-vendors">
-      <i class="ti ti-address-book"></i> <span>Vendors</span>
-    </button>
-    <button class="nav-btn" onclick="switchTab('inventory')" id="nav-inventory">
-      <i class="ti ti-package"></i> <span>Inventory</span>
-    </button>
-    <button class="nav-btn" onclick="switchTab('tasks')" id="nav-tasks">
-      <i class="ti ti-checkbox"></i> <span>Tasks</span>
-    </button>
+    <button class="nav-btn active" onclick="switchTab('vendors')" id="nav-vendors"><i class="ti ti-address-book"></i> Vendors</button>
+    <button class="nav-btn" onclick="switchTab('inventory')" id="nav-inventory"><i class="ti ti-package"></i> Inventory</button>
+    <button class="nav-btn" onclick="switchTab('tasks')" id="nav-tasks"><i class="ti ti-checkbox"></i> Tasks</button>
   </div>
 
   <div class="content">
@@ -171,7 +172,7 @@ body { font-family: var(--font-sans); background: var(--surface-0); color: var(-
       </div>
       <div class="section-header">
         <div class="section-title">Vendor directory</div>
-        <button class="add-btn" onclick="openModal('vendor')"><i class="ti ti-plus"></i> Add vendor</button>
+        <button class="add-btn" onclick="openVendorModal()"><i class="ti ti-plus"></i> Add vendor</button>
       </div>
       <div class="search-bar">
         <i class="ti ti-search"></i>
@@ -190,16 +191,17 @@ body { font-family: var(--font-sans); background: var(--surface-0); color: var(-
       </div>
       <div class="section-header">
         <div class="section-title">Equipment inventory</div>
-        <button class="add-btn" onclick="openModal('inventory')"><i class="ti ti-plus"></i> Add item</button>
+        <button class="add-btn" onclick="openInvModal()"><i class="ti ti-plus"></i> Add item</button>
       </div>
       <div class="search-bar">
         <i class="ti ti-search"></i>
-        <input type="text" placeholder="Search equipment, project, status…" id="inv-search" oninput="renderInventory()">
+        <input type="text" placeholder="Search equipment, type, status…" id="inv-search" oninput="renderInventory()">
       </div>
       <div style="overflow-x:auto;">
         <table class="inv-table">
           <thead><tr>
-            <th>Item</th><th>Category</th><th>Serial / ID</th><th>Assigned to</th><th>Status</th><th style="width:50px;"></th>
+            <th style="width:50px;"></th>
+            <th>Item</th><th>Type</th><th>Serial / ID</th><th>Assigned to</th><th>Status</th><th style="width:80px;"></th>
           </tr></thead>
           <tbody id="inv-body"></tbody>
         </table>
@@ -216,7 +218,7 @@ body { font-family: var(--font-sans); background: var(--surface-0); color: var(-
       </div>
       <div class="section-header">
         <div class="section-title">Task board</div>
-        <button class="add-btn" onclick="openModal('task')"><i class="ti ti-plus"></i> Add task</button>
+        <button class="add-btn" onclick="openTaskModal()"><i class="ti ti-plus"></i> Add task</button>
       </div>
       <div class="task-cols">
         <div>
@@ -237,54 +239,92 @@ body { font-family: var(--font-sans); background: var(--surface-0); color: var(-
   </div>
 </div>
 
-<!-- MODALS -->
+<!-- VENDOR MODAL -->
 <div class="modal-overlay" id="modal-vendor">
   <div class="modal">
-    <div class="modal-title">Add vendor</div>
-    <div class="form-row"><label class="form-label">Company name</label><input class="form-input" id="v-name" placeholder="e.g. AV Pro Solutions"></div>
-    <div class="form-row"><label class="form-label">Contact person</label><input class="form-input" id="v-contact" placeholder="e.g. Rajan Mehta"></div>
-    <div class="form-row"><label class="form-label">Phone</label><input class="form-input" id="v-phone" placeholder="+91 98765 43210"></div>
-    <div class="form-row"><label class="form-label">Category</label>
-      <select class="form-select" id="v-cat"><option>Hardware</option><option>Mechanical</option><option>AV</option><option>VR</option><option>Logistics</option><option>Furniture</option><option>General</option><option>Manpower</option></select>
+    <div class="modal-title" id="vendor-modal-title">Add vendor</div>
+    <div style="margin-bottom:12px;">
+      <label class="form-label">Vendor photo / logo</label>
+      <div class="img-upload-area" onclick="document.getElementById('v-img-input').click()" id="v-img-area">
+        <i class="ti ti-camera"></i>
+        <span>Click to upload photo or logo</span>
+      </div>
+      <img id="v-img-preview" class="img-preview" alt="Vendor preview">
+      <input type="file" id="v-img-input" accept="image/*" style="display:none" onchange="previewImage('v-img-input','v-img-preview','v-img-area')">
     </div>
-    <div class="form-row"><label class="form-label">City</label><input class="form-input" id="v-city" placeholder="e.g. Mumbai"></div>
+    <div class="form-grid">
+      <div class="form-row form-full"><label class="form-label">Company name *</label><input class="form-input" id="v-name" placeholder="e.g. AV Pro Solutions"></div>
+      <div class="form-row"><label class="form-label">Contact person</label><input class="form-input" id="v-contact" placeholder="e.g. Rajan Mehta"></div>
+      <div class="form-row"><label class="form-label">Phone</label><input class="form-input" id="v-phone" placeholder="+91 98765 43210"></div>
+      <div class="form-row"><label class="form-label">Email</label><input class="form-input" id="v-email" placeholder="vendor@email.com" type="email"></div>
+      <div class="form-row"><label class="form-label">Vendor type</label>
+        <select class="form-select" id="v-cat">
+          <option>AV</option><option>AR / VR</option><option>Logistics</option><option>LiDAR</option><option>IT</option><option>General</option><option>Manpower</option>
+        </select>
+      </div>
+      <div class="form-row"><label class="form-label">City</label><input class="form-input" id="v-city" placeholder="e.g. Mumbai"></div>
+      <div class="form-row form-full"><label class="form-label">Full address</label><input class="form-input" id="v-address" placeholder="e.g. 301, Andheri East, Mumbai - 400069"></div>
+      <div class="form-row form-full"><label class="form-label">Notes</label><input class="form-input" id="v-notes" placeholder="e.g. Preferred vendor for LiDAR events"></div>
+    </div>
     <div class="modal-actions">
+      <button class="btn-cancel" id="vendor-delete-btn" style="display:none;margin-right:auto;" onclick="deleteVendorFromModal()">Delete</button>
       <button class="btn-cancel" onclick="closeModal('vendor')">Cancel</button>
       <button class="btn-save" onclick="saveVendor()">Save vendor</button>
     </div>
   </div>
 </div>
 
+<!-- INVENTORY MODAL -->
 <div class="modal-overlay" id="modal-inventory">
   <div class="modal">
-    <div class="modal-title">Add equipment</div>
-    <div class="form-row"><label class="form-label">Item name</label><input class="form-input" id="i-name" placeholder="e.g. LiDAR Scanner L1"></div>
-    <div class="form-row"><label class="form-label">Category</label>
-      <select class="form-select" id="i-cat"><option>Hardware</option><option>VR</option><option>AV/TV</option><option>Mechanical</option><option>Camera / DSLR</option><option>Furniture</option><option>Other</option></select>
+    <div class="modal-title" id="inv-modal-title">Add equipment</div>
+    <div style="margin-bottom:12px;">
+      <label class="form-label">Equipment photo</label>
+      <div class="img-upload-area" onclick="document.getElementById('i-img-input').click()" id="i-img-area">
+        <i class="ti ti-camera"></i>
+        <span>Click to upload equipment photo</span>
+      </div>
+      <img id="i-img-preview" class="img-preview" alt="Inventory preview">
+      <input type="file" id="i-img-input" accept="image/*" style="display:none" onchange="previewImage('i-img-input','i-img-preview','i-img-area')">
     </div>
-    <div class="form-row"><label class="form-label">Serial / ID</label><input class="form-input" id="i-serial" placeholder="e.g. ZL-001"></div>
-    <div class="form-row"><label class="form-label">Assigned to (project)</label><input class="form-input" id="i-project" placeholder="e.g. India Energy Week 2026"></div>
-    <div class="form-row"><label class="form-label">Status</label>
-      <select class="form-select" id="i-status"><option>Available</option><option>Deployed</option><option>Maintenance</option></select>
+    <div class="form-grid">
+      <div class="form-row form-full"><label class="form-label">Item name *</label><input class="form-input" id="i-name" placeholder="e.g. LiDAR Scanner L1"></div>
+      <div class="form-row"><label class="form-label">Equipment type</label>
+        <select class="form-select" id="i-cat">
+          <option>LiDAR</option><option>AR / VR</option><option>AV</option><option>Camera / DSLR</option><option>LED / Display</option><option>Laptop / PC</option><option>Networking</option><option>Other</option>
+        </select>
+      </div>
+      <div class="form-row"><label class="form-label">Serial / ID</label><input class="form-input" id="i-serial" placeholder="e.g. ZL-001"></div>
+      <div class="form-row"><label class="form-label">Brand / Model</label><input class="form-input" id="i-brand" placeholder="e.g. Velodyne VLP-16"></div>
+      <div class="form-row"><label class="form-label">Purchase date</label><input class="form-input" type="date" id="i-date"></div>
+      <div class="form-row"><label class="form-label">Status</label>
+        <select class="form-select" id="i-status"><option>Available</option><option>Deployed</option><option>Maintenance</option></select>
+      </div>
+      <div class="form-row form-full"><label class="form-label">Assigned to (project)</label><input class="form-input" id="i-project" placeholder="e.g. India Energy Week 2026"></div>
+      <div class="form-row form-full"><label class="form-label">Notes</label><input class="form-input" id="i-notes" placeholder="e.g. Handle with care, fragile sensor"></div>
     </div>
     <div class="modal-actions">
+      <button class="btn-cancel" id="inv-delete-btn" style="display:none;margin-right:auto;" onclick="deleteInvFromModal()">Delete</button>
       <button class="btn-cancel" onclick="closeModal('inventory')">Cancel</button>
       <button class="btn-save" onclick="saveInventory()">Save item</button>
     </div>
   </div>
 </div>
 
+<!-- TASK MODAL -->
 <div class="modal-overlay" id="modal-task">
   <div class="modal">
     <div class="modal-title">Add task</div>
-    <div class="form-row"><label class="form-label">Task title</label><input class="form-input" id="tk-title" placeholder="e.g. Confirm LiDAR setup with vendor"></div>
-    <div class="form-row"><label class="form-label">Project / event</label><input class="form-input" id="tk-project" placeholder="e.g. NPCI GFF Singapore"></div>
-    <div class="form-row"><label class="form-label">Due date</label><input class="form-input" type="date" id="tk-due"></div>
-    <div class="form-row"><label class="form-label">Priority</label>
-      <select class="form-select" id="tk-pri"><option>High</option><option>Medium</option><option>Low</option></select>
-    </div>
-    <div class="form-row"><label class="form-label">Status</label>
-      <select class="form-select" id="tk-status"><option>To do</option><option>In progress</option><option>Done</option></select>
+    <div class="form-grid">
+      <div class="form-row form-full"><label class="form-label">Task title *</label><input class="form-input" id="tk-title" placeholder="e.g. Confirm LiDAR setup with vendor"></div>
+      <div class="form-row form-full"><label class="form-label">Project / event</label><input class="form-input" id="tk-project" placeholder="e.g. NPCI GFF Singapore"></div>
+      <div class="form-row"><label class="form-label">Due date</label><input class="form-input" type="date" id="tk-due"></div>
+      <div class="form-row"><label class="form-label">Priority</label>
+        <select class="form-select" id="tk-pri"><option>High</option><option>Medium</option><option>Low</option></select>
+      </div>
+      <div class="form-row form-full"><label class="form-label">Status</label>
+        <select class="form-select" id="tk-status"><option>To do</option><option>In progress</option><option>Done</option></select>
+      </div>
     </div>
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeModal('task')">Cancel</button>
@@ -294,24 +334,22 @@ body { font-family: var(--font-sans); background: var(--surface-0); color: var(-
 </div>
 
 <script>
-const CATEGORY_BADGE = { 'AV':'badge-av','AR / VR':'badge-ar','Logistics':'badge-log','General':'badge-gen','Manpower':'badge-man' };
-const AVATAR_COLOR = { 'AV':['#e6f1fb','#185fa5'],'AR / VR':['#e1f5ee','#0f6e56'],'Logistics':['#faeeda','#854f0b'],'General':['#eeedfe','#534ab7'],'Manpower':['#faece7','#993c1d'] };
+const CATEGORY_BADGE = { 'AV':'badge-av','AR / VR':'badge-ar','Logistics':'badge-log','General':'badge-gen','Manpower':'badge-man','LiDAR':'badge-li','IT':'badge-it' };
+const AVATAR_COLOR = { 'AV':['#e6f1fb','#185fa5'],'AR / VR':['#e1f5ee','#0f6e56'],'Logistics':['#faeeda','#854f0b'],'General':['#eeedfe','#534ab7'],'Manpower':['#faece7','#993c1d'],'LiDAR':['#f0e8fb','#6b28b5'],'IT':['#e8f4fb','#0e6e8c'] };
 
-function loadData(key, def) { try { return JSON.parse(localStorage.getItem(key)) || def; } catch { return def; } }
-function saveData(key, val) { localStorage.setItem(key, JSON.stringify(val)); }
+function loadData(key, def) { try { const d = localStorage.getItem(key); return d ? JSON.parse(d) : def; } catch { return def; } }
+function saveData(key, val) { try { localStorage.setItem(key, JSON.stringify(val)); } catch(e) { console.warn('Storage error', e); } }
 
 let vendors = loadData('zeal-vendors', [
-  { id:1, name:'AV Pro Solutions', contact:'Rajan Mehta', phone:'+91 98201 11234', category:'AV', city:'Mumbai' },
-  { id:2, name:'VR Sphere India', contact:'Priya Nair', phone:'+91 97301 22345', category:'AR / VR', city:'Bangalore' },
-  { id:3, name:'Swift Cargo', contact:'Deepak Joshi', phone:'+91 99102 33456', category:'Logistics', city:'Mumbai' },
-  { id:4, name:'TechCrew Manpower', contact:'Suresh Kumar', phone:'+91 98504 44567', category:'Manpower', city:'Delhi' },
+  { id:1, name:'AV Pro Solutions', contact:'Rajan Mehta', phone:'+91 98201 11234', email:'rajan@avpro.in', category:'AV', city:'Mumbai', address:'301, Chakala, Andheri East, Mumbai - 400069', notes:'Preferred AV partner', img:'' },
+  { id:2, name:'VR Sphere India', contact:'Priya Nair', phone:'+91 97301 22345', email:'priya@vrsphere.in', category:'AR / VR', city:'Bangalore', address:'12, Koramangala, Bangalore - 560034', notes:'', img:'' },
+  { id:3, name:'Swift Cargo', contact:'Deepak Joshi', phone:'+91 99102 33456', email:'', category:'Logistics', city:'Mumbai', address:'Sahar Road, Vile Parle East, Mumbai', notes:'Handles fragile equipment well', img:'' },
 ]);
 let inventory = loadData('zeal-inventory', [
-  { id:1, name:'LiDAR Scanner L1', category:'LiDAR', serial:'ZL-001', project:'India Energy Week 2026', status:'Deployed' },
-  { id:2, name:'HTC Vive Pro 2', category:'AR / VR', serial:'ZV-003', project:'', status:'Available' },
-  { id:3, name:'Sony A7 IV DSLR', category:'Camera / DSLR', serial:'ZC-005', project:'Vedanta-Cairn Photobooth', status:'Deployed' },
-  { id:4, name:'4K LED Panel 55"', category:'LED / Display', serial:'ZD-002', project:'', status:'Maintenance' },
-  { id:5, name:'Bose L1 PA System', category:'AV', serial:'ZA-008', project:'', status:'Available' },
+  { id:1, name:'LiDAR Scanner L1', category:'LiDAR', serial:'ZL-001', brand:'Velodyne VLP-16', date:'2024-01-15', project:'India Energy Week 2026', status:'Deployed', notes:'Calibrate before each use', img:'' },
+  { id:2, name:'HTC Vive Pro 2', category:'AR / VR', serial:'ZV-003', brand:'HTC', date:'2023-06-10', project:'', status:'Available', notes:'', img:'' },
+  { id:3, name:'Sony A7 IV DSLR', category:'Camera / DSLR', serial:'ZC-005', brand:'Sony', date:'2023-03-20', project:'Vedanta-Cairn Photobooth', status:'Deployed', notes:'', img:'' },
+  { id:4, name:'4K LED Panel 55"', category:'LED / Display', serial:'ZD-002', brand:'Samsung', date:'2022-11-01', project:'', status:'Maintenance', notes:'Backlight issue, sent for repair', img:'' },
 ]);
 let tasks = loadData('zeal-tasks', [
   { id:1, title:'Confirm LiDAR calibration with vendor', project:'India Energy Week', due:'2026-07-05', priority:'High', status:'To do' },
@@ -319,9 +357,11 @@ let tasks = loadData('zeal-tasks', [
   { id:3, title:'Check VR headset battery inventory', project:'HPCL Event', due:'2026-07-08', priority:'Medium', status:'To do' },
   { id:4, title:'Collect equipment from Andheri warehouse', project:'Internal', due:'2026-07-02', priority:'Low', status:'Done' },
 ]);
-let nextVId = loadData('zeal-nv', 5);
-let nextIId = loadData('zeal-ni', 6);
+let nextVId = loadData('zeal-nv', 4);
+let nextIId = loadData('zeal-ni', 5);
 let nextTId = loadData('zeal-nt', 5);
+let editingVendorId = null;
+let editingInvId = null;
 
 function initials(name) { return name.split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase(); }
 
@@ -332,25 +372,61 @@ function switchTab(tab) {
   });
 }
 
+function previewImage(inputId, previewId, areaId) {
+  const file = document.getElementById(inputId).files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const preview = document.getElementById(previewId);
+    const area = document.getElementById(areaId);
+    preview.src = e.target.result;
+    preview.style.display = 'block';
+    area.style.display = 'none';
+  };
+  reader.readAsDataURL(file);
+}
+
+function getImgData(inputId) {
+  const input = document.getElementById(inputId);
+  if (!input.files || !input.files[0]) return null;
+  return new Promise(resolve => {
+    const reader = new FileReader();
+    reader.onload = e => resolve(e.target.result);
+    reader.readAsDataURL(input.files[0]);
+  });
+}
+
+// VENDORS
 function renderVendors() {
   const q = document.getElementById('vendor-search').value.toLowerCase();
-  const filtered = vendors.filter(v => [v.name,v.category,v.city,v.contact].join(' ').toLowerCase().includes(q));
+  const filtered = vendors.filter(v => [v.name,v.category,v.city,v.contact,v.address||''].join(' ').toLowerCase().includes(q));
   const grid = document.getElementById('vendor-grid');
   if (!filtered.length) { grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><i class="ti ti-address-book"></i>No vendors found</div>'; }
   else grid.innerHTML = filtered.map(v => {
     const [bg, fg] = AVATAR_COLOR[v.category] || ['#f1efe8','#444'];
     const bc = CATEGORY_BADGE[v.category] || 'badge-gen';
+    const imgHtml = v.img
+      ? `<img src="${v.img}" style="width:100%;height:100%;object-fit:cover;" alt="${v.name}">`
+      : `<div class="vendor-img-placeholder"><i class="ti ti-building-store"></i><span>${v.category}</span></div>`;
     return `<div class="vendor-card">
-      <div class="vendor-top">
-        <div style="display:flex;align-items:center;flex:1;min-width:0;">
-          <div class="vendor-avatar" style="background:${bg};color:${fg};">${initials(v.name)}</div>
-          <div class="vendor-info"><div class="vendor-name">${v.name}</div><div class="vendor-category">${v.contact}</div></div>
+      <div class="vendor-img-wrap">${imgHtml}</div>
+      <div class="vendor-body">
+        <div class="vendor-top">
+          <div>
+            <div class="vendor-name">${v.name}</div>
+            <div class="vendor-sub">${v.contact||''}</div>
+          </div>
+          <div class="vendor-actions">
+            <button class="icon-btn" onclick="openVendorModal(${v.id})" title="Edit"><i class="ti ti-pencil"></i></button>
+          </div>
         </div>
-        <button class="icon-btn" onclick="deleteVendor(${v.id})"><i class="ti ti-trash"></i></button>
+        <span class="badge ${bc}">${v.category}</span>
+        ${v.phone?`<div class="vendor-detail"><i class="ti ti-phone"></i>${v.phone}</div>`:''}
+        ${v.email?`<div class="vendor-detail"><i class="ti ti-mail"></i>${v.email}</div>`:''}
+        ${v.city?`<div class="vendor-detail"><i class="ti ti-map-pin"></i>${v.city}</div>`:''}
+        ${v.address?`<div class="vendor-detail"><i class="ti ti-home"></i><span style="line-height:1.4">${v.address}</span></div>`:''}
+        ${v.notes?`<div class="vendor-detail" style="margin-top:8px;font-style:italic;color:var(--text-muted)"><i class="ti ti-note"></i>${v.notes}</div>`:''}
       </div>
-      <div><span class="badge ${bc}">${v.category}</span></div>
-      <div class="vendor-detail"><i class="ti ti-phone"></i>${v.phone}</div>
-      <div class="vendor-detail"><i class="ti ti-map-pin"></i>${v.city}</div>
     </div>`;
   }).join('');
   document.getElementById('v-total').textContent = vendors.length;
@@ -359,21 +435,89 @@ function renderVendors() {
   document.getElementById('v-log').textContent = vendors.filter(v=>v.category==='Logistics').length;
 }
 
-function deleteVendor(id) { vendors = vendors.filter(v=>v.id!==id); saveData('zeal-vendors', vendors); renderVendors(); }
+function openVendorModal(id) {
+  editingVendorId = id || null;
+  const modal = document.getElementById('modal-vendor');
+  const title = document.getElementById('vendor-modal-title');
+  const deleteBtn = document.getElementById('vendor-delete-btn');
+  resetVendorForm();
+  if (id) {
+    const v = vendors.find(x=>x.id===id);
+    if (!v) return;
+    title.textContent = 'Edit vendor';
+    deleteBtn.style.display = 'inline-flex';
+    document.getElementById('v-name').value = v.name||'';
+    document.getElementById('v-contact').value = v.contact||'';
+    document.getElementById('v-phone').value = v.phone||'';
+    document.getElementById('v-email').value = v.email||'';
+    document.getElementById('v-cat').value = v.category||'AV';
+    document.getElementById('v-city').value = v.city||'';
+    document.getElementById('v-address').value = v.address||'';
+    document.getElementById('v-notes').value = v.notes||'';
+    if (v.img) {
+      document.getElementById('v-img-preview').src = v.img;
+      document.getElementById('v-img-preview').style.display = 'block';
+      document.getElementById('v-img-area').style.display = 'none';
+    }
+  } else {
+    title.textContent = 'Add vendor';
+    deleteBtn.style.display = 'none';
+  }
+  modal.classList.add('show');
+}
 
+function resetVendorForm() {
+  ['v-name','v-contact','v-phone','v-email','v-city','v-address','v-notes'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('v-cat').value = 'AV';
+  document.getElementById('v-img-preview').style.display = 'none';
+  document.getElementById('v-img-area').style.display = 'block';
+  document.getElementById('v-img-input').value = '';
+}
+
+async function saveVendor() {
+  const name = document.getElementById('v-name').value.trim();
+  if (!name) { alert('Company name is required'); return; }
+  let imgData = null;
+  const input = document.getElementById('v-img-input');
+  if (input.files && input.files[0]) imgData = await getImgData('v-img-input');
+  if (editingVendorId) {
+    const idx = vendors.findIndex(v=>v.id===editingVendorId);
+    if (idx !== -1) {
+      vendors[idx] = { ...vendors[idx], name, contact:document.getElementById('v-contact').value.trim(), phone:document.getElementById('v-phone').value.trim(), email:document.getElementById('v-email').value.trim(), category:document.getElementById('v-cat').value, city:document.getElementById('v-city').value.trim(), address:document.getElementById('v-address').value.trim(), notes:document.getElementById('v-notes').value.trim(), img: imgData || vendors[idx].img };
+    }
+  } else {
+    vendors.push({ id:++nextVId, name, contact:document.getElementById('v-contact').value.trim(), phone:document.getElementById('v-phone').value.trim(), email:document.getElementById('v-email').value.trim(), category:document.getElementById('v-cat').value, city:document.getElementById('v-city').value.trim(), address:document.getElementById('v-address').value.trim(), notes:document.getElementById('v-notes').value.trim(), img: imgData||'' });
+    saveData('zeal-nv', nextVId);
+  }
+  saveData('zeal-vendors', vendors);
+  closeModal('vendor');
+  renderVendors();
+}
+
+function deleteVendorFromModal() {
+  if (!editingVendorId) return;
+  if (!confirm('Delete this vendor?')) return;
+  vendors = vendors.filter(v=>v.id!==editingVendorId);
+  saveData('zeal-vendors', vendors);
+  closeModal('vendor');
+  renderVendors();
+}
+
+// INVENTORY
 function renderInventory() {
   const q = document.getElementById('inv-search').value.toLowerCase();
-  const filtered = inventory.filter(i => [i.name,i.category,i.serial,i.project,i.status].join(' ').toLowerCase().includes(q));
+  const filtered = inventory.filter(i => [i.name,i.category,i.serial,i.project,i.status,i.brand||''].join(' ').toLowerCase().includes(q));
   const tbody = document.getElementById('inv-body');
   const SC = { 'Available':'status-available','Deployed':'status-deployed','Maintenance':'status-maintenance' };
-  if (!filtered.length) { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--text-muted);">No items found</td></tr>'; }
+  if (!filtered.length) { tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:2rem;color:var(--text-muted);">No items found</td></tr>'; }
   else tbody.innerHTML = filtered.map(i => `<tr>
-    <td><span style="font-weight:500;">${i.name}</span></td>
+    <td>${i.img ? `<img src="${i.img}" class="inv-thumb" alt="${i.name}">` : `<div class="inv-thumb-placeholder"><i class="ti ti-device-desktop" style="font-size:14px;"></i></div>`}</td>
+    <td><div style="font-weight:500;">${i.name}</div>${i.brand?`<div style="font-size:11px;color:var(--text-muted)">${i.brand}</div>`:''}</td>
     <td><span style="font-size:12px;color:var(--text-secondary);">${i.category}</span></td>
-    <td><code style="font-size:12px;background:var(--surface-1);padding:2px 6px;border-radius:4px;">${i.serial}</code></td>
+    <td><code style="font-size:12px;background:var(--surface-1);padding:2px 6px;border-radius:4px;">${i.serial||'—'}</code></td>
     <td><span style="font-size:12px;color:${i.project?'var(--text-accent)':'var(--text-muted)'};">${i.project||'—'}</span></td>
     <td><span class="status-pill ${SC[i.status]}"><span class="status-dot"></span>${i.status}</span></td>
-    <td><button class="icon-btn" onclick="deleteInv(${i.id})"><i class="ti ti-trash"></i></button></td>
+    <td><button class="icon-btn" onclick="openInvModal(${i.id})" title="Edit"><i class="ti ti-pencil"></i></button></td>
   </tr>`).join('');
   document.getElementById('i-total').textContent = inventory.length;
   document.getElementById('i-avail').textContent = inventory.filter(i=>i.status==='Available').length;
@@ -381,8 +525,75 @@ function renderInventory() {
   document.getElementById('i-maint').textContent = inventory.filter(i=>i.status==='Maintenance').length;
 }
 
-function deleteInv(id) { inventory = inventory.filter(i=>i.id!==id); saveData('zeal-inventory', inventory); renderInventory(); }
+function openInvModal(id) {
+  editingInvId = id || null;
+  const title = document.getElementById('inv-modal-title');
+  const deleteBtn = document.getElementById('inv-delete-btn');
+  resetInvForm();
+  if (id) {
+    const item = inventory.find(x=>x.id===id);
+    if (!item) return;
+    title.textContent = 'Edit equipment';
+    deleteBtn.style.display = 'inline-flex';
+    document.getElementById('i-name').value = item.name||'';
+    document.getElementById('i-cat').value = item.category||'LiDAR';
+    document.getElementById('i-serial').value = item.serial||'';
+    document.getElementById('i-brand').value = item.brand||'';
+    document.getElementById('i-date').value = item.date||'';
+    document.getElementById('i-status').value = item.status||'Available';
+    document.getElementById('i-project').value = item.project||'';
+    document.getElementById('i-notes').value = item.notes||'';
+    if (item.img) {
+      document.getElementById('i-img-preview').src = item.img;
+      document.getElementById('i-img-preview').style.display = 'block';
+      document.getElementById('i-img-area').style.display = 'none';
+    }
+  } else {
+    title.textContent = 'Add equipment';
+    deleteBtn.style.display = 'none';
+  }
+  document.getElementById('modal-inventory').classList.add('show');
+}
 
+function resetInvForm() {
+  ['i-name','i-serial','i-brand','i-date','i-project','i-notes'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('i-cat').value = 'LiDAR';
+  document.getElementById('i-status').value = 'Available';
+  document.getElementById('i-img-preview').style.display = 'none';
+  document.getElementById('i-img-area').style.display = 'block';
+  document.getElementById('i-img-input').value = '';
+}
+
+async function saveInventory() {
+  const name = document.getElementById('i-name').value.trim();
+  if (!name) { alert('Item name is required'); return; }
+  let imgData = null;
+  const input = document.getElementById('i-img-input');
+  if (input.files && input.files[0]) imgData = await getImgData('i-img-input');
+  if (editingInvId) {
+    const idx = inventory.findIndex(i=>i.id===editingInvId);
+    if (idx !== -1) {
+      inventory[idx] = { ...inventory[idx], name, category:document.getElementById('i-cat').value, serial:document.getElementById('i-serial').value.trim(), brand:document.getElementById('i-brand').value.trim(), date:document.getElementById('i-date').value, status:document.getElementById('i-status').value, project:document.getElementById('i-project').value.trim(), notes:document.getElementById('i-notes').value.trim(), img: imgData || inventory[idx].img };
+    }
+  } else {
+    inventory.push({ id:++nextIId, name, category:document.getElementById('i-cat').value, serial:document.getElementById('i-serial').value.trim(), brand:document.getElementById('i-brand').value.trim(), date:document.getElementById('i-date').value, status:document.getElementById('i-status').value, project:document.getElementById('i-project').value.trim(), notes:document.getElementById('i-notes').value.trim(), img: imgData||'' });
+    saveData('zeal-ni', nextIId);
+  }
+  saveData('zeal-inventory', inventory);
+  closeModal('inventory');
+  renderInventory();
+}
+
+function deleteInvFromModal() {
+  if (!editingInvId) return;
+  if (!confirm('Delete this item?')) return;
+  inventory = inventory.filter(i=>i.id!==editingInvId);
+  saveData('zeal-inventory', inventory);
+  closeModal('inventory');
+  renderInventory();
+}
+
+// TASKS
 function renderTasks() {
   const cols = { 'To do':'col-todo','In progress':'col-prog','Done':'col-done' };
   const counts = { 'To do':0,'In progress':0,'Done':0 };
@@ -393,7 +604,7 @@ function renderTasks() {
     const card = document.createElement('div');
     card.className = 'task-card';
     card.innerHTML = `<div class="task-title">${t.title}</div>
-      <div style="font-size:11px;color:var(--text-accent);margin-bottom:4px;">${t.project}</div>
+      <div style="font-size:11px;color:var(--text-accent);margin-bottom:2px;">${t.project}</div>
       <div class="task-meta">
         <span class="task-pri ${PC[t.priority]}">${t.priority}</span>
         ${t.due?`<span class="task-due"><i class="ti ti-calendar"></i>${t.due}</span>`:''}
@@ -410,38 +621,18 @@ function renderTasks() {
   document.getElementById('t-high').textContent = tasks.filter(t=>t.priority==='High').length;
 }
 
+function openTaskModal() { document.getElementById('modal-task').classList.add('show'); }
 function deleteTask(id) { tasks = tasks.filter(t=>t.id!==id); saveData('zeal-tasks', tasks); renderTasks(); }
-
-function openModal(type) { document.getElementById('modal-'+type).classList.add('show'); }
-function closeModal(type) { document.getElementById('modal-'+type).classList.remove('show'); }
-
-function saveVendor() {
-  const name = document.getElementById('v-name').value.trim();
-  if (!name) return;
-  vendors.push({ id:nextVId++, name, contact:document.getElementById('v-contact').value.trim()||'—', phone:document.getElementById('v-phone').value.trim()||'—', category:document.getElementById('v-cat').value, city:document.getElementById('v-city').value.trim()||'—' });
-  saveData('zeal-vendors', vendors); saveData('zeal-nv', nextVId);
-  ['v-name','v-contact','v-phone','v-city'].forEach(id=>document.getElementById(id).value='');
-  closeModal('vendor'); renderVendors();
-}
-
-function saveInventory() {
-  const name = document.getElementById('i-name').value.trim();
-  if (!name) return;
-  inventory.push({ id:nextIId++, name, category:document.getElementById('i-cat').value, serial:document.getElementById('i-serial').value.trim()||'—', project:document.getElementById('i-project').value.trim()||'', status:document.getElementById('i-status').value });
-  saveData('zeal-inventory', inventory); saveData('zeal-ni', nextIId);
-  ['i-name','i-serial','i-project'].forEach(id=>document.getElementById(id).value='');
-  closeModal('inventory'); renderInventory();
-}
-
 function saveTask() {
   const title = document.getElementById('tk-title').value.trim();
-  if (!title) return;
-  tasks.push({ id:nextTId++, title, project:document.getElementById('tk-project').value.trim()||'', due:document.getElementById('tk-due').value||'', priority:document.getElementById('tk-pri').value, status:document.getElementById('tk-status').value });
+  if (!title) { alert('Task title is required'); return; }
+  tasks.push({ id:++nextTId, title, project:document.getElementById('tk-project').value.trim(), due:document.getElementById('tk-due').value, priority:document.getElementById('tk-pri').value, status:document.getElementById('tk-status').value });
   saveData('zeal-tasks', tasks); saveData('zeal-nt', nextTId);
   ['tk-title','tk-project','tk-due'].forEach(id=>document.getElementById(id).value='');
   closeModal('task'); renderTasks();
 }
 
+function closeModal(type) { document.getElementById('modal-'+type).classList.remove('show'); }
 document.querySelectorAll('.modal-overlay').forEach(el => el.addEventListener('click', e => { if(e.target===el) el.classList.remove('show'); }));
 
 renderVendors(); renderInventory(); renderTasks();
