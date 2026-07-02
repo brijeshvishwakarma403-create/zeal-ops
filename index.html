@@ -30,10 +30,13 @@ body { font-family: var(--font-sans); background: var(--surface-0); color: var(-
 .logo i { font-size: 17px; color: #fff; }
 .app-title { font-size: 15px; font-weight: 500; }
 .app-sub { font-size: 12px; color: var(--text-muted); }
+.header-right { display: flex; align-items: center; gap: 8px; }
 .sync-status { font-size: 11px; display: flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 20px; }
 .sync-ok { background: #eaf3de; color: #3b6d11; }
 .sync-err { background: #fcebeb; color: #a32d2d; }
 .sync-loading { background: var(--surface-1); color: var(--text-muted); }
+.settings-btn { width: 30px; height: 30px; border-radius: 6px; border: 0.5px solid var(--border-strong); background: var(--surface-1); display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-muted); }
+.settings-btn:hover { color: var(--text-primary); background: var(--surface-0); }
 .nav { display: flex; gap: 4px; padding: 0.75rem 1.25rem; border-bottom: 0.5px solid var(--border); background: var(--surface-1); }
 .nav-btn { padding: 6px 14px; border-radius: var(--radius); border: none; background: transparent; font-size: 13px; color: var(--text-secondary); cursor: pointer; display: flex; align-items: center; gap: 6px; font-family: var(--font-sans); transition: background 0.15s; }
 .nav-btn:hover { background: var(--surface-0); }
@@ -44,7 +47,7 @@ body { font-family: var(--font-sans); background: var(--surface-0); color: var(-
 .section-title { font-size: 15px; font-weight: 500; }
 .add-btn { display: flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: var(--radius); border: 0.5px solid var(--border-strong); background: var(--surface-2); font-size: 13px; color: var(--text-primary); cursor: pointer; font-family: var(--font-sans); }
 .add-btn:hover { background: var(--surface-1); }
-.search-bar { display: flex; align-items: center; gap: 8px; background: var(--surface-1); border: 0.5px solid var(--border); border-radius: var(--radius); padding: 0 12px; margin-bottom: 1rem; }
+.search-bar { display: flex; align-items: center; gap: 8px; background: var(--surface-1); border: 0.5px solid var(--border); border-radius: var(--radius); padding: 0 12px; margin-bottom: 0.6rem; }
 .search-bar i { font-size: 15px; color: var(--text-muted); }
 .search-bar input { flex: 1; border: none; background: transparent; padding: 8px 0; font-size: 13px; color: var(--text-primary); font-family: var(--font-sans); outline: none; }
 .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 1.25rem; }
@@ -66,10 +69,6 @@ body { font-family: var(--font-sans); background: var(--surface-0); color: var(-
 .vendor-detail { display: flex; align-items: flex-start; gap: 6px; font-size: 12px; color: var(--text-secondary); margin-top: 5px; }
 .vendor-detail i { font-size: 13px; color: var(--text-muted); flex-shrink: 0; margin-top: 1px; }
 .badge { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 500; margin-top: 6px; }
-.badge-av { background:#e6f1fb;color:#185fa5; } .badge-ar { background:#e1f5ee;color:#0f6e56; }
-.badge-log { background:#faeeda;color:#854f0b; } .badge-gen { background:#eeedfe;color:#534ab7; }
-.badge-man { background:#faece7;color:#993c1d; } .badge-li { background:#f0e8fb;color:#6b28b5; }
-.badge-it { background:#e8f4fb;color:#0e6e8c; }
 .inv-table { width: 100%; border-collapse: collapse; }
 .inv-table th { font-size: 11px; font-weight: 500; color: var(--text-muted); text-align: left; padding: 8px 12px; border-bottom: 0.5px solid var(--border); text-transform: uppercase; letter-spacing: 0.04em; }
 .inv-table td { font-size: 13px; padding: 10px 12px; border-bottom: 0.5px solid var(--border); vertical-align: middle; }
@@ -109,12 +108,27 @@ body { font-family: var(--font-sans); background: var(--surface-0); color: var(-
 .btn-save { padding: 7px 16px; border-radius: var(--radius); border: none; background: #2a78d6; font-size: 13px; color: #fff; cursor: pointer; font-family: var(--font-sans); font-weight: 500; }
 .btn-danger { padding: 7px 16px; border-radius: var(--radius); border: none; background: #e53935; font-size: 13px; color: #fff; cursor: pointer; font-family: var(--font-sans); }
 .loading-row { text-align: center; padding: 2rem; color: var(--text-muted); font-size: 13px; }
-.filter-chips { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1rem; }
-.chip { padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 500; cursor: pointer; border: 0.5px solid var(--border-strong); background: var(--surface-1); color: var(--text-secondary); transition: all 0.15s; white-space: nowrap; }
+.filter-chips { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1rem; margin-top: 0.5rem; }
+.chip { padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 500; cursor: pointer; border: 0.5px solid var(--border-strong); background: var(--surface-1); color: var(--text-secondary); transition: all 0.15s; white-space: nowrap; display: inline-flex; align-items: center; gap: 4px; }
 .chip:hover { background: var(--surface-0); }
 .chip.active { background: #2a78d6; color: #fff; border-color: #2a78d6; }
+.chip-add { border-style: dashed; color: var(--text-muted); }
+.chip-add:hover { color: #2a78d6; border-color: #2a78d6; background: var(--bg-accent); }
 .empty-state { text-align: center; padding: 3rem 1rem; color: var(--text-muted); font-size: 13px; }
 .empty-state i { font-size: 32px; display: block; margin-bottom: 8px; }
+/* Settings panel */
+.settings-modal { width: 520px; }
+.settings-section { margin-bottom: 1.25rem; }
+.settings-section-title { font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px; }
+.tag-list { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+.tag-item { display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 500; border: 0.5px solid var(--border-strong); background: var(--surface-1); }
+.tag-remove { cursor: pointer; color: var(--text-muted); font-size: 13px; line-height: 1; border: none; background: none; padding: 0; }
+.tag-remove:hover { color: #e53935; }
+.tag-add-row { display: flex; gap: 6px; }
+.tag-add-row input { flex: 1; padding: 7px 10px; border: 0.5px solid var(--border-strong); border-radius: var(--radius); background: var(--surface-1); color: var(--text-primary); font-size: 13px; font-family: var(--font-sans); outline: none; }
+.tag-add-row input:focus { border-color: var(--border-accent); }
+.tag-add-btn { padding: 7px 14px; border-radius: var(--radius); border: none; background: #2a78d6; color: #fff; font-size: 13px; cursor: pointer; font-family: var(--font-sans); white-space: nowrap; }
+.divider { height: 0.5px; background: var(--border); margin: 1rem 0; }
 @media (max-width: 640px) {
   .stats-row { grid-template-columns: repeat(2,1fr); }
   .task-cols { grid-template-columns: 1fr; }
@@ -129,42 +143,37 @@ body { font-family: var(--font-sans); background: var(--surface-0); color: var(-
     <div class="header-left">
       <div class="logo"><i class="ti ti-bolt"></i></div>
       <div>
-        <div class="app-title">Zeal Ops Management</div>
-        <div class="app-sub">Zeal Interactive Service</div>
+        <div class="app-title">Zeal Ops Manager</div>
+        <div class="app-sub">Zeal Interactive Services</div>
       </div>
     </div>
-    <div class="sync-status sync-loading" id="sync-status"><i class="ti ti-cloud"></i> Connecting…</div>
+    <div class="header-right">
+      <div class="sync-status sync-loading" id="sync-status"><i class="ti ti-cloud"></i> Connecting…</div>
+      <button class="settings-btn" onclick="openSettings()" title="Manage categories"><i class="ti ti-settings" style="font-size:15px;"></i></button>
+    </div>
   </div>
+
   <div class="nav">
     <button class="nav-btn active" onclick="switchTab('vendors')" id="nav-vendors"><i class="ti ti-address-book"></i> Vendors</button>
     <button class="nav-btn" onclick="switchTab('inventory')" id="nav-inventory"><i class="ti ti-package"></i> Inventory</button>
     <button class="nav-btn" onclick="switchTab('tasks')" id="nav-tasks"><i class="ti ti-checkbox"></i> Tasks</button>
   </div>
-  <div class="content">
 
+  <div class="content">
     <!-- VENDORS -->
     <div id="tab-vendors">
       <div class="stats-row">
         <div class="stat-card"><div class="stat-label">Total vendors</div><div class="stat-val" id="v-total">—</div></div>
-        <div class="stat-card"><div class="stat-label">AV</div><div class="stat-val" id="v-av">—</div></div>
-        <div class="stat-card"><div class="stat-label">VR</div><div class="stat-val" id="v-ar">—</div></div>
-        <div class="stat-card"><div class="stat-label">Hardware</div><div class="stat-val" id="v-log">—</div></div>
+        <div class="stat-card"><div class="stat-label">AV</div><div class="stat-val" id="v-stat-1">—</div></div>
+        <div class="stat-card"><div class="stat-label">VR</div><div class="stat-val" id="v-stat-2">—</div></div>
+        <div class="stat-card"><div class="stat-label">Hardware</div><div class="stat-val" id="v-stat-3">—</div></div>
       </div>
       <div class="section-header">
         <div class="section-title">Vendor directory</div>
         <button class="add-btn" onclick="openVendorModal()"><i class="ti ti-plus"></i> Add vendor</button>
       </div>
       <div class="search-bar"><i class="ti ti-search"></i><input type="text" placeholder="Search vendors…" id="vendor-search" oninput="renderVendors()"></div>
-      <div class="filter-chips" id="vendor-chips">
-        <span class="chip active" onclick="setVendorFilter('All')">All</span>
-        <span class="chip" onclick="setVendorFilter('AV')">AV</span>
-        <span class="chip" onclick="setVendorFilter('VR')">VR</span>
-        <span class="chip" onclick="setVendorFilter('Hardware')">Hardware</span>
-        <span class="chip" onclick="setVendorFilter('Mechanical')">Mechanical</span>
-        <span class="chip" onclick="setVendorFilter('IT')">IT</span>
-        <span class="chip" onclick="setVendorFilter('Furniture')">Furniture</span>
-        <span class="chip" onclick="setVendorFilter('General')">General</span>
-      </div>
+      <div class="filter-chips" id="vendor-chips"></div>
       <div class="card-grid" id="vendor-grid"><div class="loading-row" style="grid-column:1/-1"><i class="ti ti-loader" style="font-size:20px;display:block;margin-bottom:6px;"></i>Loading vendors…</div></div>
     </div>
 
@@ -181,18 +190,7 @@ body { font-family: var(--font-sans); background: var(--surface-0); color: var(-
         <button class="add-btn" onclick="openInvModal()"><i class="ti ti-plus"></i> Add item</button>
       </div>
       <div class="search-bar"><i class="ti ti-search"></i><input type="text" placeholder="Search equipment…" id="inv-search" oninput="renderInventory()"></div>
-      <div class="filter-chips" id="inv-chips">
-        <span class="chip active" onclick="setInvFilter('All')">All</span>
-        <span class="chip" onclick="setInvFilter('Available')">Available</span>
-        <span class="chip" onclick="setInvFilter('Deployed')">Deployed</span>
-        <span class="chip" onclick="setInvFilter('Maintenance')">Maintenance</span>
-        <span class="chip" onclick="setInvFilter('LiDAR')">LiDAR</span>
-        <span class="chip" onclick="setInvFilter('AR / VR')">AR / VR</span>
-        <span class="chip" onclick="setInvFilter('AV')">AV</span>
-        <span class="chip" onclick="setInvFilter('Camera / DSLR')">Camera</span>
-        <span class="chip" onclick="setInvFilter('LED / Display')">LED</span>
-        <span class="chip" onclick="setInvFilter('Laptop / PC')">Laptop / PC</span>
-      </div>
+      <div class="filter-chips" id="inv-chips"></div>
       <div style="overflow-x:auto;">
         <table class="inv-table">
           <thead><tr><th style="width:50px;"></th><th>Item</th><th>Type</th><th>Serial / ID</th><th>Assigned to</th><th>Status</th><th style="width:60px;"></th></tr></thead>
@@ -219,7 +217,6 @@ body { font-family: var(--font-sans); background: var(--surface-0); color: var(-
         <div><div class="col-header"><i class="ti ti-circle-check"></i> Done <span class="col-count" id="cnt-done">0</span></div><div class="task-col" id="col-done"></div></div>
       </div>
     </div>
-
   </div>
 </div>
 
@@ -238,9 +235,7 @@ body { font-family: var(--font-sans); background: var(--surface-0); color: var(-
       <div><label class="form-label">Contact person</label><input class="form-input" id="v-contact" placeholder="Rajan Mehta"></div>
       <div><label class="form-label">Phone</label><input class="form-input" id="v-phone" placeholder="+91 98765 43210"></div>
       <div><label class="form-label">Email</label><input class="form-input" id="v-email" placeholder="vendor@email.com"></div>
-      <div><label class="form-label">Vendor type</label>
-        <select class="form-select" id="v-cat"><option>AV</option><option>VR</option><option>Furniture</option><option>Mechanical</option><option>Logistics</option><option>Hardware</option><option>IT</option><option>Other</option><option>Manpower</option></select>
-      </div>
+      <div><label class="form-label">Vendor type</label><select class="form-select" id="v-cat"></select></div>
       <div><label class="form-label">City</label><input class="form-input" id="v-city" placeholder="Mumbai"></div>
       <div class="form-full"><label class="form-label">Full address</label><input class="form-input" id="v-address" placeholder="301, Andheri East, Mumbai - 400069"></div>
       <div class="form-full"><label class="form-label">Notes</label><input class="form-input" id="v-notes" placeholder="Any notes about this vendor"></div>
@@ -265,9 +260,7 @@ body { font-family: var(--font-sans); background: var(--surface-0); color: var(-
     </div>
     <div class="form-grid">
       <div class="form-full"><label class="form-label">Item name *</label><input class="form-input" id="i-name" placeholder="e.g. LiDAR Scanner L1"></div>
-      <div><label class="form-label">Equipment type</label>
-        <select class="form-select" id="i-cat"><option>LiDAR</option><option>VR</option><option>AV</option><option>Camera / DSLR</option><option>LED / Display</option><option>Laptop / PC</option><option>Networking</option><option>Other</option></select>
-      </div>
+      <div><label class="form-label">Equipment type</label><select class="form-select" id="i-cat"></select></div>
       <div><label class="form-label">Serial / ID</label><input class="form-input" id="i-serial" placeholder="ZL-001"></div>
       <div><label class="form-label">Brand / Model</label><input class="form-input" id="i-brand" placeholder="Velodyne VLP-16"></div>
       <div><label class="form-label">Purchase date</label><input class="form-input" type="date" id="i-date"></div>
@@ -303,41 +296,179 @@ body { font-family: var(--font-sans); background: var(--surface-0); color: var(-
   </div>
 </div>
 
+<!-- SETTINGS MODAL -->
+<div class="modal-overlay" id="modal-settings">
+  <div class="modal settings-modal">
+    <div class="modal-title"><i class="ti ti-settings" style="margin-right:6px;"></i>Manage categories</div>
+
+    <div class="settings-section">
+      <div class="settings-section-title">Vendor types</div>
+      <div class="tag-list" id="vendor-tag-list"></div>
+      <div class="tag-add-row">
+        <input type="text" id="new-vendor-cat" placeholder="e.g. Drone, Printing, Signage…" onkeydown="if(event.key==='Enter') addVendorCat()">
+        <button class="tag-add-btn" onclick="addVendorCat()"><i class="ti ti-plus"></i> Add</button>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="settings-section">
+      <div class="settings-section-title">Inventory / equipment types</div>
+      <div class="tag-list" id="inv-tag-list"></div>
+      <div class="tag-add-row">
+        <input type="text" id="new-inv-cat" placeholder="e.g. Projector, Drone, Server…" onkeydown="if(event.key==='Enter') addInvCat()">
+        <button class="tag-add-btn" onclick="addInvCat()"><i class="ti ti-plus"></i> Add</button>
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal('settings')">Close</button>
+    </div>
+  </div>
+</div>
+
 <script>
-// ── Supabase config ──────────────────────────────────────────────
+// ── Supabase ─────────────────────────────────────────────────────
 const SUPA_URL = 'https://daefezdbixspizbzdduj.supabase.co';
 const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRhZWZlemRiaXhzcGl6YnpkZHVqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI5ODAyODIsImV4cCI6MjA5ODU1NjI4Mn0.Ogw7ju7dLZEXoOz6MQnosfQB1NiuHrWDlMJt4VmmrZk';
-
-const headers = {
-  'Content-Type': 'application/json',
-  'apikey': SUPA_KEY,
-  'Authorization': `Bearer ${SUPA_KEY}`,
-  'Prefer': 'return=representation'
-};
+const headers = { 'Content-Type':'application/json','apikey':SUPA_KEY,'Authorization':`Bearer ${SUPA_KEY}`,'Prefer':'return=representation' };
 
 async function db(method, table, body, id) {
-  const url = `${SUPA_URL}/rest/v1/${table}${id ? `?id=eq.${id}` : ''}`;
+  const url = `${SUPA_URL}/rest/v1/${table}${id?`?id=eq.${id}`:''}`;
   const res = await fetch(url, { method, headers, body: body ? JSON.stringify(body) : undefined });
   if (!res.ok) { const e = await res.text(); throw new Error(e); }
-  return method === 'DELETE' ? null : res.json();
+  return method==='DELETE' ? null : res.json();
 }
 
-const BADGE = { 'AV':'badge-av','AR / VR':'badge-ar','Logistics':'badge-log','General':'badge-gen','Manpower':'badge-man','LiDAR':'badge-li','IT':'badge-it' };
-const AVCOL = { 'AV':['#e6f1fb','#185fa5'],'AR / VR':['#e1f5ee','#0f6e56'],'Logistics':['#faeeda','#854f0b'],'General':['#eeedfe','#534ab7'],'Manpower':['#faece7','#993c1d'],'LiDAR':['#f0e8fb','#6b28b5'],'IT':['#e8f4fb','#0e6e8c'] };
+// ── Category config — single source of truth ─────────────────────
+// Stored in localStorage so user changes persist across sessions
+const BADGE_COLORS = [
+  ['#e6f1fb','#185fa5'],['#e1f5ee','#0f6e56'],['#faeeda','#854f0b'],
+  ['#eeedfe','#534ab7'],['#faece7','#993c1d'],['#f0e8fb','#6b28b5'],
+  ['#e8f4fb','#0e6e8c'],['#fef3e2','#8a5a00'],['#fce8f3','#8a1a5e'],
+  ['#e8fef0','#0a6632']
+];
 
+function getBadgeStyle(cat, list) {
+  const idx = list.indexOf(cat) % BADGE_COLORS.length;
+  const [bg, fg] = BADGE_COLORS[Math.max(0,idx)];
+  return `background:${bg};color:${fg};`;
+}
+
+function loadCategories() {
+  const defV = ['AV','VR','Hardware','Mechanical','Logistics','IT','Furniture','General','Manpower','Other'];
+  const defI = ['LiDAR','VR','AV','Camera / DSLR','LED / Display','Laptop / PC','Networking','Other'];
+  return {
+    vendor: JSON.parse(localStorage.getItem('zeal-vcats') || JSON.stringify(defV)),
+    inventory: JSON.parse(localStorage.getItem('zeal-icats') || JSON.stringify(defI))
+  };
+}
+
+function saveCategories(cats) {
+  localStorage.setItem('zeal-vcats', JSON.stringify(cats.vendor));
+  localStorage.setItem('zeal-icats', JSON.stringify(cats.inventory));
+}
+
+let cats = loadCategories();
+
+// ── Rebuild dropdowns and filter chips from cats ──────────────────
+function rebuildVendorUI() {
+  // Dropdown
+  const sel = document.getElementById('v-cat');
+  sel.innerHTML = cats.vendor.map(c=>`<option value="${c}">${c}</option>`).join('');
+  // Filter chips
+  const chips = document.getElementById('vendor-chips');
+  chips.innerHTML = `<span class="chip active" onclick="setVendorFilter('All')">All</span>` +
+    cats.vendor.map(c=>`<span class="chip" onclick="setVendorFilter('${c}')">${c}</span>`).join('') +
+    `<span class="chip chip-add" onclick="openSettings()"><i class="ti ti-plus"></i> Add type</span>`;
+  // Re-apply active filter
+  chips.querySelectorAll('.chip').forEach(el => {
+    if(el.textContent.trim() === activeVendorFilter) el.classList.add('active');
+    else el.classList.remove('active');
+  });
+}
+
+function rebuildInvUI() {
+  // Dropdown
+  const sel = document.getElementById('i-cat');
+  sel.innerHTML = cats.inventory.map(c=>`<option value="${c}">${c}</option>`).join('');
+  // Filter chips — status chips first, then type chips
+  const statusChips = ['Available','Deployed','Maintenance'];
+  const chips = document.getElementById('inv-chips');
+  chips.innerHTML = `<span class="chip active" onclick="setInvFilter('All')">All</span>` +
+    statusChips.map(s=>`<span class="chip" onclick="setInvFilter('${s}')">${s}</span>`).join('') +
+    `<span style="width:1px;height:20px;background:var(--border);display:inline-block;margin:0 2px;"></span>` +
+    cats.inventory.map(c=>`<span class="chip" onclick="setInvFilter('${c}')">${c}</span>`).join('') +
+    `<span class="chip chip-add" onclick="openSettings()"><i class="ti ti-plus"></i> Add type</span>`;
+  chips.querySelectorAll('.chip').forEach(el => {
+    if(el.textContent.trim() === activeInvFilter) el.classList.add('active');
+    else el.classList.remove('active');
+  });
+}
+
+// ── Settings panel ───────────────────────────────────────────────
+function openSettings() {
+  renderTagLists();
+  document.getElementById('modal-settings').classList.add('show');
+}
+
+function renderTagLists() {
+  document.getElementById('vendor-tag-list').innerHTML = cats.vendor.map((c,i) =>
+    `<span class="tag-item"><span>${c}</span><button class="tag-remove" onclick="removeVendorCat(${i})" title="Remove">×</button></span>`
+  ).join('');
+  document.getElementById('inv-tag-list').innerHTML = cats.inventory.map((c,i) =>
+    `<span class="tag-item"><span>${c}</span><button class="tag-remove" onclick="removeInvCat(${i})" title="Remove">×</button></span>`
+  ).join('');
+}
+
+function addVendorCat() {
+  const val = document.getElementById('new-vendor-cat').value.trim();
+  if (!val || cats.vendor.includes(val)) return;
+  cats.vendor.push(val);
+  saveCategories(cats);
+  document.getElementById('new-vendor-cat').value = '';
+  renderTagLists();
+  rebuildVendorUI();
+}
+
+function removeVendorCat(idx) {
+  cats.vendor.splice(idx, 1);
+  saveCategories(cats);
+  renderTagLists();
+  rebuildVendorUI();
+}
+
+function addInvCat() {
+  const val = document.getElementById('new-inv-cat').value.trim();
+  if (!val || cats.inventory.includes(val)) return;
+  cats.inventory.push(val);
+  saveCategories(cats);
+  document.getElementById('new-inv-cat').value = '';
+  renderTagLists();
+  rebuildInvUI();
+}
+
+function removeInvCat(idx) {
+  cats.inventory.splice(idx, 1);
+  saveCategories(cats);
+  renderTagLists();
+  rebuildInvUI();
+}
+
+// ── State ────────────────────────────────────────────────────────
 let vendors = [], inventory = [], tasks = [];
 let editingVendorId = null, editingInvId = null;
 let activeVendorFilter = 'All', activeInvFilter = 'All';
 
 function setVendorFilter(filter) {
   activeVendorFilter = filter;
-  document.querySelectorAll('#vendor-chips .chip').forEach(c => c.classList.toggle('active', c.textContent === filter));
+  document.querySelectorAll('#vendor-chips .chip').forEach(c => c.classList.toggle('active', c.textContent.trim()===filter));
   renderVendors();
 }
 
 function setInvFilter(filter) {
   activeInvFilter = filter;
-  document.querySelectorAll('#inv-chips .chip').forEach(c => c.classList.toggle('active', c.textContent === filter));
+  document.querySelectorAll('#inv-chips .chip').forEach(c => c.classList.toggle('active', c.textContent.trim()===filter));
   renderInventory();
 }
 
@@ -369,33 +500,26 @@ function previewImage(inputId, previewId, areaId) {
 function getImgData(inputId) {
   const input = document.getElementById(inputId);
   if (!input.files || !input.files[0]) return Promise.resolve(null);
-  return new Promise(resolve => {
-    const reader = new FileReader();
-    reader.onload = e => resolve(e.target.result);
-    reader.readAsDataURL(input.files[0]);
-  });
+  return new Promise(resolve => { const r = new FileReader(); r.onload = e => resolve(e.target.result); r.readAsDataURL(input.files[0]); });
 }
 
-// ── VENDORS ─────────────────────────────────────────────────────
+// ── VENDORS ──────────────────────────────────────────────────────
 async function loadVendors() {
-  try {
-    vendors = await db('GET', 'vendors?order=created_at.desc');
-    renderVendors();
-    setSync('ok', 'Synced');
-  } catch(e) { setSync('err', 'DB error'); console.error(e); }
+  try { vendors = await db('GET','vendors?order=created_at.desc'); renderVendors(); setSync('ok','Synced'); }
+  catch(e) { setSync('err','DB error'); console.error(e); }
 }
 
 function renderVendors() {
   const q = document.getElementById('vendor-search').value.toLowerCase();
   const filtered = vendors.filter(v => {
     const matchSearch = [v.name,v.category,v.city,v.contact,v.address||''].join(' ').toLowerCase().includes(q);
-    const matchFilter = activeVendorFilter === 'All' || v.category === activeVendorFilter;
+    const matchFilter = activeVendorFilter==='All' || v.category===activeVendorFilter;
     return matchSearch && matchFilter;
   });
   const grid = document.getElementById('vendor-grid');
-  if (!filtered.length) { grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><i class="ti ti-address-book"></i>No vendors yet. Add your first one!</div>'; }
+  if (!filtered.length) { grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><i class="ti ti-address-book"></i>No vendors found</div>'; }
   else grid.innerHTML = filtered.map(v => {
-    const bc = BADGE[v.category] || 'badge-gen';
+    const style = getBadgeStyle(v.category, cats.vendor);
     const imgHtml = v.img ? `<img src="${v.img}" style="width:100%;height:100%;object-fit:cover;" alt="${v.name}">` : `<div class="vendor-img-placeholder"><i class="ti ti-building-store"></i><span>${v.category||''}</span></div>`;
     return `<div class="vendor-card">
       <div class="vendor-img-wrap">${imgHtml}</div>
@@ -404,7 +528,7 @@ function renderVendors() {
           <div><div class="vendor-name">${v.name}</div><div class="vendor-sub">${v.contact||''}</div></div>
           <button class="icon-btn" onclick="openVendorModal(${v.id})"><i class="ti ti-pencil"></i></button>
         </div>
-        <span class="badge ${bc}">${v.category||''}</span>
+        <span class="badge" style="${style}">${v.category||''}</span>
         ${v.phone?`<div class="vendor-detail"><i class="ti ti-phone"></i>${v.phone}</div>`:''}
         ${v.email?`<div class="vendor-detail"><i class="ti ti-mail"></i>${v.email}</div>`:''}
         ${v.city?`<div class="vendor-detail"><i class="ti ti-map-pin"></i>${v.city}</div>`:''}
@@ -414,34 +538,33 @@ function renderVendors() {
     </div>`;
   }).join('');
   document.getElementById('v-total').textContent = vendors.length;
-  document.getElementById('v-av').textContent = vendors.filter(v=>v.category==='AV').length;
-  document.getElementById('v-ar').textContent = vendors.filter(v=>v.category==='AR / VR').length;
-  document.getElementById('v-log').textContent = vendors.filter(v=>v.category==='Logistics').length;
+  document.getElementById('v-stat-1').textContent = vendors.filter(v=>v.category===cats.vendor[0]).length;
+  document.getElementById('v-stat-2').textContent = vendors.filter(v=>v.category===cats.vendor[1]).length;
+  document.getElementById('v-stat-3').textContent = vendors.filter(v=>v.category===cats.vendor[2]).length;
 }
 
 function openVendorModal(id) {
-  editingVendorId = id || null;
+  editingVendorId = id||null;
   resetVendorForm();
   document.getElementById('vendor-modal-title').textContent = id ? 'Edit vendor' : 'Add vendor';
   document.getElementById('vendor-delete-btn').style.display = id ? 'inline-block' : 'none';
   if (id) {
-    const v = vendors.find(x=>x.id===id); if (!v) return;
+    const v = vendors.find(x=>x.id===id); if(!v) return;
     document.getElementById('v-name').value = v.name||'';
     document.getElementById('v-contact').value = v.contact||'';
     document.getElementById('v-phone').value = v.phone||'';
     document.getElementById('v-email').value = v.email||'';
-    document.getElementById('v-cat').value = v.category||'AV';
+    document.getElementById('v-cat').value = v.category||cats.vendor[0];
     document.getElementById('v-city').value = v.city||'';
     document.getElementById('v-address').value = v.address||'';
     document.getElementById('v-notes').value = v.notes||'';
-    if (v.img) { document.getElementById('v-img-preview').src = v.img; document.getElementById('v-img-preview').style.display='block'; document.getElementById('v-img-area').style.display='none'; }
+    if(v.img){document.getElementById('v-img-preview').src=v.img;document.getElementById('v-img-preview').style.display='block';document.getElementById('v-img-area').style.display='none';}
   }
   document.getElementById('modal-vendor').classList.add('show');
 }
 
 function resetVendorForm() {
   ['v-name','v-contact','v-phone','v-email','v-city','v-address','v-notes'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('v-cat').value='AV';
   document.getElementById('v-img-preview').style.display='none';
   document.getElementById('v-img-area').style.display='block';
   document.getElementById('v-img-input').value='';
@@ -449,50 +572,42 @@ function resetVendorForm() {
 
 async function saveVendor() {
   const name = document.getElementById('v-name').value.trim();
-  if (!name) { alert('Company name is required'); return; }
+  if(!name){alert('Company name is required');return;}
   const btn = document.getElementById('vendor-save-btn');
-  btn.textContent = 'Saving…'; btn.disabled = true;
+  btn.textContent='Saving…';btn.disabled=true;
   try {
     const imgData = await getImgData('v-img-input');
     const payload = { name, contact:document.getElementById('v-contact').value.trim()||null, phone:document.getElementById('v-phone').value.trim()||null, email:document.getElementById('v-email').value.trim()||null, category:document.getElementById('v-cat').value, city:document.getElementById('v-city').value.trim()||null, address:document.getElementById('v-address').value.trim()||null, notes:document.getElementById('v-notes').value.trim()||null };
-    if (imgData) payload.img = imgData;
-    if (editingVendorId) {
-      await db('PATCH', 'vendors', payload, editingVendorId);
-    } else {
-      await db('POST', 'vendors', payload);
-    }
-    await loadVendors();
-    closeModal('vendor');
-  } catch(e) { alert('Save failed: '+e.message); }
-  btn.textContent = 'Save vendor'; btn.disabled = false;
+    if(imgData) payload.img=imgData;
+    editingVendorId ? await db('PATCH','vendors',payload,editingVendorId) : await db('POST','vendors',payload);
+    await loadVendors(); closeModal('vendor');
+  } catch(e){alert('Save failed: '+e.message);}
+  btn.textContent='Save vendor';btn.disabled=false;
 }
 
 async function deleteVendorFromModal() {
-  if (!editingVendorId || !confirm('Delete this vendor?')) return;
-  try { await db('DELETE', 'vendors', null, editingVendorId); await loadVendors(); closeModal('vendor'); }
-  catch(e) { alert('Delete failed: '+e.message); }
+  if(!editingVendorId||!confirm('Delete this vendor?'))return;
+  try{await db('DELETE','vendors',null,editingVendorId);await loadVendors();closeModal('vendor');}
+  catch(e){alert('Delete failed: '+e.message);}
 }
 
 // ── INVENTORY ────────────────────────────────────────────────────
 async function loadInventory() {
-  try {
-    inventory = await db('GET', 'inventory?order=created_at.desc');
-    renderInventory();
-  } catch(e) { console.error(e); }
+  try{inventory=await db('GET','inventory?order=created_at.desc');renderInventory();}
+  catch(e){console.error(e);}
 }
 
 function renderInventory() {
   const q = document.getElementById('inv-search').value.toLowerCase();
-  const statusFilters = ['Available','Deployed','Maintenance'];
   const filtered = inventory.filter(i => {
     const matchSearch = [i.name,i.category,i.serial,i.project,i.status,i.brand||''].join(' ').toLowerCase().includes(q);
-    const matchFilter = activeInvFilter === 'All' || i.category === activeInvFilter || i.status === activeInvFilter;
+    const matchFilter = activeInvFilter==='All'||i.category===activeInvFilter||i.status===activeInvFilter;
     return matchSearch && matchFilter;
   });
   const tbody = document.getElementById('inv-body');
-  const SC = { 'Available':'status-available','Deployed':'status-deployed','Maintenance':'status-maintenance' };
-  if (!filtered.length) { tbody.innerHTML = '<tr><td colspan="7" class="empty-state"><i class="ti ti-package"></i>No items yet</td></tr>'; return; }
-  tbody.innerHTML = filtered.map(i => `<tr>
+  const SC = {'Available':'status-available','Deployed':'status-deployed','Maintenance':'status-maintenance'};
+  if(!filtered.length){tbody.innerHTML='<tr><td colspan="7" class="empty-state"><i class="ti ti-package"></i>No items found</td></tr>';return;}
+  tbody.innerHTML = filtered.map(i=>`<tr>
     <td>${i.img?`<img src="${i.img}" class="inv-thumb" alt="${i.name}">`:`<div class="inv-thumb-placeholder"><i class="ti ti-device-desktop" style="font-size:14px;"></i></div>`}</td>
     <td><div style="font-weight:500;">${i.name}</div>${i.brand?`<div style="font-size:11px;color:var(--text-muted)">${i.brand}</div>`:''}</td>
     <td style="font-size:12px;color:var(--text-secondary);">${i.category||''}</td>
@@ -501,119 +616,122 @@ function renderInventory() {
     <td><span class="status-pill ${SC[i.status]||''}"><span class="status-dot"></span>${i.status}</span></td>
     <td><button class="icon-btn" onclick="openInvModal(${i.id})"><i class="ti ti-pencil"></i></button></td>
   </tr>`).join('');
-  document.getElementById('i-total').textContent = inventory.length;
-  document.getElementById('i-avail').textContent = inventory.filter(i=>i.status==='Available').length;
-  document.getElementById('i-dep').textContent = inventory.filter(i=>i.status==='Deployed').length;
-  document.getElementById('i-maint').textContent = inventory.filter(i=>i.status==='Maintenance').length;
+  document.getElementById('i-total').textContent=inventory.length;
+  document.getElementById('i-avail').textContent=inventory.filter(i=>i.status==='Available').length;
+  document.getElementById('i-dep').textContent=inventory.filter(i=>i.status==='Deployed').length;
+  document.getElementById('i-maint').textContent=inventory.filter(i=>i.status==='Maintenance').length;
 }
 
 function openInvModal(id) {
-  editingInvId = id || null;
+  editingInvId=id||null;
   resetInvForm();
-  document.getElementById('inv-modal-title').textContent = id ? 'Edit equipment' : 'Add equipment';
-  document.getElementById('inv-delete-btn').style.display = id ? 'inline-block' : 'none';
-  if (id) {
-    const item = inventory.find(x=>x.id===id); if (!item) return;
-    document.getElementById('i-name').value = item.name||'';
-    document.getElementById('i-cat').value = item.category||'LiDAR';
-    document.getElementById('i-serial').value = item.serial||'';
-    document.getElementById('i-brand').value = item.brand||'';
-    document.getElementById('i-date').value = item.purchase_date||'';
-    document.getElementById('i-status').value = item.status||'Available';
-    document.getElementById('i-project').value = item.project||'';
-    document.getElementById('i-notes').value = item.notes||'';
-    if (item.img) { document.getElementById('i-img-preview').src=item.img; document.getElementById('i-img-preview').style.display='block'; document.getElementById('i-img-area').style.display='none'; }
+  document.getElementById('inv-modal-title').textContent=id?'Edit equipment':'Add equipment';
+  document.getElementById('inv-delete-btn').style.display=id?'inline-block':'none';
+  if(id){
+    const item=inventory.find(x=>x.id===id);if(!item)return;
+    document.getElementById('i-name').value=item.name||'';
+    document.getElementById('i-cat').value=item.category||cats.inventory[0];
+    document.getElementById('i-serial').value=item.serial||'';
+    document.getElementById('i-brand').value=item.brand||'';
+    document.getElementById('i-date').value=item.purchase_date||'';
+    document.getElementById('i-status').value=item.status||'Available';
+    document.getElementById('i-project').value=item.project||'';
+    document.getElementById('i-notes').value=item.notes||'';
+    if(item.img){document.getElementById('i-img-preview').src=item.img;document.getElementById('i-img-preview').style.display='block';document.getElementById('i-img-area').style.display='none';}
   }
   document.getElementById('modal-inventory').classList.add('show');
 }
 
 function resetInvForm() {
   ['i-name','i-serial','i-brand','i-date','i-project','i-notes'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('i-cat').value='LiDAR'; document.getElementById('i-status').value='Available';
-  document.getElementById('i-img-preview').style.display='none'; document.getElementById('i-img-area').style.display='block'; document.getElementById('i-img-input').value='';
+  document.getElementById('i-status').value='Available';
+  document.getElementById('i-img-preview').style.display='none';
+  document.getElementById('i-img-area').style.display='block';
+  document.getElementById('i-img-input').value='';
 }
 
 async function saveInventory() {
-  const name = document.getElementById('i-name').value.trim();
-  if (!name) { alert('Item name is required'); return; }
-  const btn = document.getElementById('inv-save-btn');
-  btn.textContent = 'Saving…'; btn.disabled = true;
-  try {
-    const imgData = await getImgData('i-img-input');
-    const payload = { name, category:document.getElementById('i-cat').value, serial:document.getElementById('i-serial').value.trim()||null, brand:document.getElementById('i-brand').value.trim()||null, purchase_date:document.getElementById('i-date').value||null, status:document.getElementById('i-status').value, project:document.getElementById('i-project').value.trim()||null, notes:document.getElementById('i-notes').value.trim()||null };
-    if (imgData) payload.img = imgData;
-    if (editingInvId) { await db('PATCH', 'inventory', payload, editingInvId); }
-    else { await db('POST', 'inventory', payload); }
-    await loadInventory(); closeModal('inventory');
-  } catch(e) { alert('Save failed: '+e.message); }
-  btn.textContent = 'Save item'; btn.disabled = false;
+  const name=document.getElementById('i-name').value.trim();
+  if(!name){alert('Item name is required');return;}
+  const btn=document.getElementById('inv-save-btn');
+  btn.textContent='Saving…';btn.disabled=true;
+  try{
+    const imgData=await getImgData('i-img-input');
+    const payload={name,category:document.getElementById('i-cat').value,serial:document.getElementById('i-serial').value.trim()||null,brand:document.getElementById('i-brand').value.trim()||null,purchase_date:document.getElementById('i-date').value||null,status:document.getElementById('i-status').value,project:document.getElementById('i-project').value.trim()||null,notes:document.getElementById('i-notes').value.trim()||null};
+    if(imgData)payload.img=imgData;
+    editingInvId?await db('PATCH','inventory',payload,editingInvId):await db('POST','inventory',payload);
+    await loadInventory();closeModal('inventory');
+  }catch(e){alert('Save failed: '+e.message);}
+  btn.textContent='Save item';btn.disabled=false;
 }
 
 async function deleteInvFromModal() {
-  if (!editingInvId || !confirm('Delete this item?')) return;
-  try { await db('DELETE', 'inventory', null, editingInvId); await loadInventory(); closeModal('inventory'); }
-  catch(e) { alert('Delete failed: '+e.message); }
+  if(!editingInvId||!confirm('Delete this item?'))return;
+  try{await db('DELETE','inventory',null,editingInvId);await loadInventory();closeModal('inventory');}
+  catch(e){alert('Delete failed: '+e.message);}
 }
 
 // ── TASKS ────────────────────────────────────────────────────────
 async function loadTasks() {
-  try { tasks = await db('GET', 'tasks?order=created_at.desc'); renderTasks(); }
-  catch(e) { console.error(e); }
+  try{tasks=await db('GET','tasks?order=created_at.desc');renderTasks();}
+  catch(e){console.error(e);}
 }
 
 function renderTasks() {
-  const cols = { 'To do':'col-todo','In progress':'col-prog','Done':'col-done' };
-  const counts = { 'To do':0,'In progress':0,'Done':0 };
-  Object.keys(cols).forEach(s => document.getElementById(cols[s]).innerHTML = '');
-  tasks.forEach(t => {
-    counts[t.status] = (counts[t.status]||0) + 1;
-    const PC = { 'High':'pri-high','Medium':'pri-med','Low':'pri-low' };
-    const card = document.createElement('div');
-    card.className = 'task-card';
-    card.innerHTML = `<div class="task-title">${t.title}</div>
+  const cols={'To do':'col-todo','In progress':'col-prog','Done':'col-done'};
+  const counts={'To do':0,'In progress':0,'Done':0};
+  Object.keys(cols).forEach(s=>document.getElementById(cols[s]).innerHTML='');
+  tasks.forEach(t=>{
+    counts[t.status]=(counts[t.status]||0)+1;
+    const PC={'High':'pri-high','Medium':'pri-med','Low':'pri-low'};
+    const card=document.createElement('div');
+    card.className='task-card';
+    card.innerHTML=`<div class="task-title">${t.title}</div>
       <div style="font-size:11px;color:var(--text-accent);margin-bottom:2px;">${t.project||''}</div>
       <div class="task-meta">
         <span class="task-pri ${PC[t.priority]||''}">${t.priority}</span>
         ${t.due_date?`<span class="task-due"><i class="ti ti-calendar"></i>${t.due_date}</span>`:''}
         <button style="margin-left:auto;background:none;border:none;cursor:pointer;color:var(--text-muted);" onclick="deleteTask(${t.id})"><i class="ti ti-x" style="font-size:13px;"></i></button>
       </div>`;
-    const colEl = document.getElementById(cols[t.status]);
-    if (colEl) colEl.appendChild(card);
+    const colEl=document.getElementById(cols[t.status]);
+    if(colEl)colEl.appendChild(card);
   });
-  document.getElementById('cnt-todo').textContent = counts['To do']||0;
-  document.getElementById('cnt-prog').textContent = counts['In progress']||0;
-  document.getElementById('cnt-done').textContent = counts['Done']||0;
-  document.getElementById('t-todo').textContent = counts['To do']||0;
-  document.getElementById('t-prog').textContent = counts['In progress']||0;
-  document.getElementById('t-done').textContent = counts['Done']||0;
-  document.getElementById('t-high').textContent = tasks.filter(t=>t.priority==='High').length;
+  document.getElementById('cnt-todo').textContent=counts['To do']||0;
+  document.getElementById('cnt-prog').textContent=counts['In progress']||0;
+  document.getElementById('cnt-done').textContent=counts['Done']||0;
+  document.getElementById('t-todo').textContent=counts['To do']||0;
+  document.getElementById('t-prog').textContent=counts['In progress']||0;
+  document.getElementById('t-done').textContent=counts['Done']||0;
+  document.getElementById('t-high').textContent=tasks.filter(t=>t.priority==='High').length;
 }
 
-function openTaskModal() { document.getElementById('modal-task').classList.add('show'); }
+function openTaskModal(){document.getElementById('modal-task').classList.add('show');}
 
-async function deleteTask(id) {
-  if (!confirm('Delete this task?')) return;
-  try { await db('DELETE', 'tasks', null, id); await loadTasks(); }
-  catch(e) { alert('Delete failed: '+e.message); }
+async function deleteTask(id){
+  if(!confirm('Delete this task?'))return;
+  try{await db('DELETE','tasks',null,id);await loadTasks();}
+  catch(e){alert('Delete failed: '+e.message);}
 }
 
-async function saveTask() {
-  const title = document.getElementById('tk-title').value.trim();
-  if (!title) { alert('Task title is required'); return; }
-  try {
-    await db('POST', 'tasks', { title, project:document.getElementById('tk-project').value.trim()||null, due_date:document.getElementById('tk-due').value||null, priority:document.getElementById('tk-pri').value, status:document.getElementById('tk-status').value });
+async function saveTask(){
+  const title=document.getElementById('tk-title').value.trim();
+  if(!title){alert('Task title is required');return;}
+  try{
+    await db('POST','tasks',{title,project:document.getElementById('tk-project').value.trim()||null,due_date:document.getElementById('tk-due').value||null,priority:document.getElementById('tk-pri').value,status:document.getElementById('tk-status').value});
     ['tk-title','tk-project','tk-due'].forEach(id=>document.getElementById(id).value='');
-    await loadTasks(); closeModal('task');
-  } catch(e) { alert('Save failed: '+e.message); }
+    await loadTasks();closeModal('task');
+  }catch(e){alert('Save failed: '+e.message);}
 }
 
-function closeModal(type) { document.getElementById('modal-'+type).classList.remove('show'); }
-document.querySelectorAll('.modal-overlay').forEach(el => el.addEventListener('click', e => { if(e.target===el) el.classList.remove('show'); }));
+function closeModal(type){document.getElementById('modal-'+type).classList.remove('show');}
+document.querySelectorAll('.modal-overlay').forEach(el=>el.addEventListener('click',e=>{if(e.target===el)el.classList.remove('show');}));
 
 // ── INIT ─────────────────────────────────────────────────────────
 async function init() {
-  setSync('loading', 'Connecting…');
-  await Promise.all([loadVendors(), loadInventory(), loadTasks()]);
+  rebuildVendorUI();
+  rebuildInvUI();
+  setSync('loading','Connecting…');
+  await Promise.all([loadVendors(),loadInventory(),loadTasks()]);
 }
 init();
 </script>
