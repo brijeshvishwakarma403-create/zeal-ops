@@ -533,7 +533,7 @@ const BADGE_COLORS = [
   ['#eeedfe','#534ab7'],['#faece7','#993c1d'],['#f0e8fb','#6b28b5'],
   ['#e8f4fb','#0e6e8c'],['#fef3e2','#8a5a00'],['#fce8f3','#8a1a5e'],['#e8fef0','#0a6632']
 ];
-const VCATS = ['AV','VR','Hardware','Mechanical','Logistics','IT','Furniture','General','Manpower','Other'];
+const VCATS = ['AV','VR','Hardware','Mechanical','Logistics','IT','Furniture','General','Manpower','Other','Printing'];
 const ICATS = ['LiDAR','VR','AV','Camera / DSLR','LED / Display','Laptop / PC','Networking','Other'];
 
 function getBadgeStyle(cat, list) {
@@ -634,6 +634,8 @@ function renderVendors() {
   document.getElementById('v-stat-1').textContent=vendors.filter(v=>v.category===VCATS[0]).length;
   document.getElementById('v-stat-2').textContent=vendors.filter(v=>v.category===VCATS[1]).length;
   document.getElementById('v-stat-3').textContent=vendors.filter(v=>v.category===VCATS[2]).length;
+  document.getElementById('v-stat-4').textContent=vendors.filter(v=>v.category===VCATS[3]).length;
+  document.getElementById('v-stat-5').textContent=vendors.filter(v=>v.category===VCATS[4]).length;
 }
 function openVendorModal(id) {
   editingVendorId=id||null;resetVendorForm();
