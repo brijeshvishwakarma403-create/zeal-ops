@@ -41,8 +41,8 @@ body { font-family: var(--font-sans); background: var(--surface-0); color: var(-
 .login-error { font-size: 12px; color: #a32d2d; background: #fcebeb; border-radius: 6px; padding: 8px 12px; margin-top: 10px; display: none; }
 
 /* ── APP ── */
-.app { max-width: 1100px; margin: 0 auto; display: none; }
-.header { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.25rem; border-bottom: 0.5px solid var(--border); background: var(--surface-2); position: sticky; top: 0; z-index: 10; }
+.app { width: 100%; display: none; }
+.header { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.5rem; border-bottom: 0.5px solid var(--border); background: var(--surface-2); position: sticky; top: 0; z-index: 10; }
 .header-left { display: flex; align-items: center; gap: 10px; }
 .logo { width: 34px; height: 34px; background: #2a78d6; border-radius: 8px; display: flex; align-items: center; justify-content: center; }
 .logo i { font-size: 17px; color: #fff; }
@@ -59,11 +59,11 @@ body { font-family: var(--font-sans); background: var(--surface-0); color: var(-
 .role-readonly { background: var(--border-strong); color: var(--text-secondary); }
 .header-btn { width: 30px; height: 30px; border-radius: 6px; border: 0.5px solid var(--border-strong); background: var(--surface-1); display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-muted); }
 .header-btn:hover { color: var(--text-primary); }
-.nav { display: flex; gap: 4px; padding: 0.75rem 1.25rem; border-bottom: 0.5px solid var(--border); background: var(--surface-1); overflow-x: auto; }
-.nav-btn { padding: 6px 14px; border-radius: var(--radius); border: none; background: transparent; font-size: 13px; color: var(--text-secondary); cursor: pointer; display: flex; align-items: center; gap: 6px; font-family: var(--font-sans); transition: background 0.15s; white-space: nowrap; }
+.nav { display: flex; gap: 4px; padding: 0.75rem 1.5rem; border-bottom: 0.5px solid var(--border); background: var(--surface-1); overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.nav-btn { padding: 6px 14px; border-radius: var(--radius); border: none; background: transparent; font-size: 13px; color: var(--text-secondary); cursor: pointer; display: flex; align-items: center; gap: 6px; font-family: var(--font-sans); transition: background 0.15s; white-space: nowrap; flex-shrink: 0; }
 .nav-btn:hover { background: var(--surface-0); }
 .nav-btn.active { background: var(--bg-accent); color: var(--text-accent); font-weight: 500; }
-.content { padding: 1.25rem; }
+.content { padding: 1.25rem 1.5rem; }
 .tab-hidden { display: none; }
 .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
 .section-title { font-size: 15px; font-weight: 500; }
@@ -76,20 +76,28 @@ body { font-family: var(--font-sans); background: var(--surface-0); color: var(-
 .stat-card { background: var(--surface-1); border-radius: var(--radius); padding: 12px; }
 .stat-label { font-size: 11px; color: var(--text-muted); margin-bottom: 4px; }
 .stat-val { font-size: 22px; font-weight: 500; }
-.card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 12px; }
-.vendor-card { background: var(--surface-2); border: 0.5px solid var(--border); border-radius: 12px; overflow: hidden; }
-.vendor-img-wrap { width: 100%; height: 110px; background: var(--surface-1); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+.vendor-card { background: var(--surface-2); border: 0.5px solid var(--border); border-radius: 12px; overflow: hidden; transition: box-shadow 0.15s; }
+.vendor-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+.vendor-img-wrap { width: 100%; height: 90px; background: var(--surface-1); display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
 .vendor-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
-.vendor-img-placeholder { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--text-muted); font-size: 11px; }
-.vendor-img-placeholder i { font-size: 26px; }
-.vendor-body { padding: 0.9rem 1rem; }
-.vendor-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 6px; }
-.vendor-name { font-size: 14px; font-weight: 500; }
+.vendor-img-placeholder { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--text-muted); font-size: 10px; }
+.vendor-img-placeholder i { font-size: 22px; }
+/* Image overlay actions — shown on hover */
+.vendor-img-actions { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.45); display: none; align-items: center; justify-content: center; gap: 8px; }
+.vendor-img-wrap:hover .vendor-img-actions { display: flex; }
+.img-action-btn { width: 32px; height: 32px; border-radius: 50%; border: none; background: rgba(255,255,255,0.9); display: flex; align-items: center; justify-content: center; cursor: pointer; color: #0b0b0b; font-size: 14px; }
+.img-action-btn:hover { background: #fff; }
+.img-action-btn.danger { background: rgba(229,57,53,0.9); color: #fff; }
+.img-action-btn.danger:hover { background: #e53935; }
+.vendor-body { padding: 0.7rem 0.85rem; }
+.vendor-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 4px; }
+.vendor-name { font-size: 13px; font-weight: 500; line-height: 1.3; }
 .vendor-sub { font-size: 11px; color: var(--text-muted); }
-.icon-btn { width: 28px; height: 28px; border-radius: 6px; border: none; background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-muted); }
+.icon-btn { width: 26px; height: 26px; border-radius: 6px; border: none; background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-muted); flex-shrink: 0; }
 .icon-btn:hover { background: var(--surface-1); color: var(--text-primary); }
-.vendor-detail { display: flex; align-items: flex-start; gap: 6px; font-size: 12px; color: var(--text-secondary); margin-top: 5px; }
-.vendor-detail i { font-size: 13px; color: var(--text-muted); flex-shrink: 0; margin-top: 1px; }
+.vendor-detail { display: flex; align-items: flex-start; gap: 5px; font-size: 11px; color: var(--text-secondary); margin-top: 4px; }
+.vendor-detail i { font-size: 12px; color: var(--text-muted); flex-shrink: 0; margin-top: 1px; }
 .badge { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 500; margin-top: 6px; }
 .inv-table { width: 100%; border-collapse: collapse; }
 .inv-table th { font-size: 11px; font-weight: 500; color: var(--text-muted); text-align: left; padding: 8px 12px; border-bottom: 0.5px solid var(--border); text-transform: uppercase; letter-spacing: 0.04em; }
@@ -160,11 +168,25 @@ body { font-family: var(--font-sans); background: var(--surface-0); color: var(-
 .access-denied { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 4rem 1rem; color: var(--text-muted); font-size: 13px; text-align: center; }
 .access-denied i { font-size: 36px; color: #e53935; display: block; margin-bottom: 10px; }
 
+@media (max-width: 768px) {
+  .header { padding: 0.75rem 1rem; }
+  .nav { padding: 0.6rem 1rem; }
+  .content { padding: 1rem; }
+  .user-pill span:not(.role-badge) { display: none; }
+  .sync-status span { display: none; }
+  .app-sub { display: none; }
+}
 @media (max-width: 640px) {
   .stats-row { grid-template-columns: repeat(2,1fr); }
   .task-cols { grid-template-columns: 1fr; }
-  .card-grid { grid-template-columns: 1fr; }
+  .card-grid { grid-template-columns: repeat(2, 1fr); }
   .form-grid { grid-template-columns: 1fr; }
+  .header-right .sync-status { display: none; }
+  .user-table { font-size: 11px; }
+  .user-table th, .user-table td { padding: 6px 8px; }
+}
+@media (max-width: 400px) {
+  .card-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
@@ -545,13 +567,37 @@ function getBadgeStyle(cat, list) {
 let activeVendorFilter='All', activeInvFilter='All';
 
 function buildChips() {
+  // Vendor chips with counts
+  const vCounts = {};
+  VCATS.forEach(c => vCounts[c] = vendors.filter(v=>v.category===c).length);
   document.getElementById('vendor-chips').innerHTML =
-    `<span class="chip active" onclick="setVendorFilter('All')">All</span>` +
-    VCATS.map(c=>`<span class="chip" onclick="setVendorFilter('${c}')">${c}</span>`).join('');
+    `<span class="chip active" onclick="setVendorFilter('All')">All <span style="opacity:0.7;font-size:10px;">${vendors.length}</span></span>` +
+    VCATS.filter(c=>vCounts[c]>0).map(c=>`<span class="chip" onclick="setVendorFilter('${c}')">${c} <span style="opacity:0.7;font-size:10px;">${vCounts[c]}</span></span>`).join('') +
+    VCATS.filter(c=>vCounts[c]===0).map(c=>`<span class="chip" onclick="setVendorFilter('${c}')" style="opacity:0.5;">${c}</span>`).join('');
+
+  // Inventory chips — status + type with counts
+  const iStatusCounts = { 'Available': inventory.filter(i=>i.status==='Available').length, 'Deployed': inventory.filter(i=>i.status==='Deployed').length, 'Maintenance': inventory.filter(i=>i.status==='Maintenance').length };
+  const iCatCounts = {};
+  ICATS.forEach(c => iCatCounts[c] = inventory.filter(i=>i.category===c).length);
   document.getElementById('inv-chips').innerHTML =
-    `<span class="chip active" onclick="setInvFilter('All')">All</span>` +
-    ['Available','Deployed','Maintenance'].map(s=>`<span class="chip" onclick="setInvFilter('${s}')">${s}</span>`).join('') +
-    ICATS.map(c=>`<span class="chip" onclick="setInvFilter('${c}')">${c}</span>`).join('');
+    `<span class="chip active" onclick="setInvFilter('All')">All <span style="opacity:0.7;font-size:10px;">${inventory.length}</span></span>` +
+    ['Available','Deployed','Maintenance'].map(s=>`<span class="chip" onclick="setInvFilter('${s}')" style="${iStatusCounts[s]===0?'opacity:0.5;':''}">${s} <span style="opacity:0.7;font-size:10px;">${iStatusCounts[s]}</span></span>`).join('') +
+    `<span style="display:inline-block;width:1px;height:16px;background:var(--border-strong);margin:0 2px;vertical-align:middle;"></span>` +
+    ICATS.filter(c=>iCatCounts[c]>0).map(c=>`<span class="chip" onclick="setInvFilter('${c}')">${c} <span style="opacity:0.7;font-size:10px;">${iCatCounts[c]}</span></span>`).join('') +
+    ICATS.filter(c=>iCatCounts[c]===0).map(c=>`<span class="chip" onclick="setInvFilter('${c}')" style="opacity:0.5;">${c}</span>`).join('');
+
+  // Re-apply active states
+  document.querySelectorAll('#vendor-chips .chip').forEach(c=>c.classList.toggle('active',c.textContent.trim().startsWith(activeVendorFilter==='All'?'All':activeVendorFilter)));
+  document.querySelectorAll('#inv-chips .chip').forEach(c=>c.classList.toggle('active',c.textContent.trim().startsWith(activeInvFilter==='All'?'All':activeInvFilter)));
+}
+
+// Show/hide inventory image overlay on row hover
+function bindInvImgHover() {
+  document.querySelectorAll('.inv-img-overlay').forEach(el => {
+    const parent = el.parentElement;
+    parent.addEventListener('mouseenter', () => el.style.display='flex');
+    parent.addEventListener('mouseleave', () => el.style.display='none');
+  });
 }
 
 function setVendorFilter(f) {
@@ -597,7 +643,7 @@ let vendors=[], inventory=[], tasks=[], users=[];
 let editingVendorId=null, editingInvId=null, editingUserId=null;
 
 async function loadVendors() {
-  try{vendors=await db('GET','vendors?order=created_at.desc');renderVendors();setSync('ok','Synced');}
+  try{vendors=await db('GET','vendors?order=created_at.desc');renderVendors();buildChips();setSync('ok','Synced');}
   catch(e){setSync('err','DB error');console.error(e);}
 }
 function renderVendors() {
@@ -612,19 +658,25 @@ function renderVendors() {
   if(!filtered.length){grid.innerHTML='<div class="empty-state" style="grid-column:1/-1"><i class="ti ti-address-book"></i>No vendors found</div>';return;}
   grid.innerHTML=filtered.map(v=>{
     const style=getBadgeStyle(v.category,VCATS);
-    const imgHtml=v.img?`<img src="${v.img}" style="width:100%;height:100%;object-fit:cover;" alt="${v.name}">`:`<div class="vendor-img-placeholder"><i class="ti ti-building-store"></i><span>${v.category||''}</span></div>`;
+    const imgContent = v.img
+      ? `<img src="${v.img}" style="width:100%;height:100%;object-fit:cover;" alt="${v.name}">`
+      : `<div class="vendor-img-placeholder"><i class="ti ti-building-store"></i><span>${v.category||''}</span></div>`;
+    const imgActions = canEdit ? `<div class="vendor-img-actions">
+      <button class="img-action-btn" onclick="triggerVendorImgReplace(${v.id},event)" title="Replace image"><i class="ti ti-camera"></i></button>
+      ${v.img?`<button class="img-action-btn danger" onclick="removeVendorImg(${v.id},event)" title="Remove image"><i class="ti ti-trash"></i></button>`:''}
+    </div>` : '';
     return `<div class="vendor-card">
-      <div class="vendor-img-wrap">${imgHtml}</div>
+      <div class="vendor-img-wrap">${imgContent}${imgActions}</div>
       <div class="vendor-body">
         <div class="vendor-top">
-          <div><div class="vendor-name">${v.name}</div><div class="vendor-sub">${v.contact||''}</div></div>
+          <div style="min-width:0;flex:1;"><div class="vendor-name">${v.name}</div><div class="vendor-sub">${v.contact||''}</div></div>
           ${canEdit?`<button class="icon-btn" onclick="openVendorModal(${v.id})"><i class="ti ti-pencil"></i></button>`:''}
         </div>
-        <span class="badge" style="${style}">${v.category||''}</span>
+        <span class="badge" style="${style};font-size:10px;">${v.category||''}</span>
         ${v.phone?`<div class="vendor-detail"><i class="ti ti-phone"></i>${v.phone}</div>`:''}
         ${v.email?`<div class="vendor-detail"><i class="ti ti-mail"></i>${v.email}</div>`:''}
         ${v.city?`<div class="vendor-detail"><i class="ti ti-map-pin"></i>${v.city}</div>`:''}
-        ${v.address?`<div class="vendor-detail"><i class="ti ti-home"></i><span style="line-height:1.4">${v.address}</span></div>`:''}
+        ${v.address?`<div class="vendor-detail"><i class="ti ti-home"></i><span style="line-height:1.3">${v.address}</span></div>`:''}
         ${v.notes?`<div class="vendor-detail" style="font-style:italic;color:var(--text-muted)"><i class="ti ti-note"></i>${v.notes}</div>`:''}
       </div>
     </div>`;
@@ -651,6 +703,56 @@ function resetVendorForm(){
   ['v-name','v-contact','v-phone','v-email','v-city','v-address','v-notes'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('v-img-preview').style.display='none';document.getElementById('v-img-area').style.display='block';document.getElementById('v-img-input').value='';
 }
+
+// Inline image replace on vendor card
+function triggerVendorImgReplace(id, e) {
+  e.stopPropagation();
+  const input = document.createElement('input');
+  input.type = 'file'; input.accept = 'image/*';
+  input.onchange = async () => {
+    const file = input.files[0]; if(!file) return;
+    const reader = new FileReader();
+    reader.onload = async (ev) => {
+      try {
+        await db('PATCH','vendors',{img: ev.target.result},id);
+        await loadVendors();
+      } catch(err) { alert('Image update failed: '+err.message); }
+    };
+    reader.readAsDataURL(file);
+  };
+  input.click();
+}
+async function removeVendorImg(id, e) {
+  e.stopPropagation();
+  if(!confirm('Remove this image?')) return;
+  try { await db('PATCH','vendors',{img: null},id); await loadVendors(); }
+  catch(err) { alert('Failed: '+err.message); }
+}
+
+// Inline image replace on inventory row
+function triggerInvImgReplace(id, e) {
+  e.stopPropagation();
+  const input = document.createElement('input');
+  input.type = 'file'; input.accept = 'image/*';
+  input.onchange = async () => {
+    const file = input.files[0]; if(!file) return;
+    const reader = new FileReader();
+    reader.onload = async (ev) => {
+      try {
+        await db('PATCH','inventory',{img: ev.target.result},id);
+        await loadInventory();
+      } catch(err) { alert('Image update failed: '+err.message); }
+    };
+    reader.readAsDataURL(file);
+  };
+  input.click();
+}
+async function removeInvImg(id, e) {
+  e.stopPropagation();
+  if(!confirm('Remove this image?')) return;
+  try { await db('PATCH','inventory',{img: null},id); await loadInventory(); }
+  catch(err) { alert('Failed: '+err.message); }
+}
 async function saveVendor(){
   const name=document.getElementById('v-name').value.trim();if(!name){alert('Company name required');return;}
   const btn=document.getElementById('vendor-save-btn');btn.textContent='Saving…';btn.disabled=true;
@@ -671,7 +773,7 @@ async function deleteVendorFromModal(){
 
 // ── INVENTORY ────────────────────────────────────────────────────
 async function loadInventory(){
-  try{inventory=await db('GET','inventory?order=created_at.desc');renderInventory();}catch(e){console.error(e);}
+  try{inventory=await db('GET','inventory?order=created_at.desc');renderInventory();buildChips();setTimeout(bindInvImgHover,100);}catch(e){console.error(e);}
 }
 function renderInventory(){
   const q=document.getElementById('inv-search').value.toLowerCase();
@@ -685,7 +787,15 @@ function renderInventory(){
   const canEdit=currentProfile.role==='admin'||currentProfile.can_edit;
   if(!filtered.length){tbody.innerHTML='<tr><td colspan="7" class="empty-state"><i class="ti ti-package"></i>No items found</td></tr>';return;}
   tbody.innerHTML=filtered.map(i=>`<tr>
-    <td>${i.img?`<img src="${i.img}" class="inv-thumb" alt="${i.name}">`:`<div class="inv-thumb-placeholder"><i class="ti ti-device-desktop" style="font-size:14px;"></i></div>`}</td>
+    <td style="position:relative;">
+      <div style="position:relative;display:inline-block;">
+        ${i.img?`<img src="${i.img}" class="inv-thumb" alt="${i.name}">`:`<div class="inv-thumb-placeholder"><i class="ti ti-device-desktop" style="font-size:14px;"></i></div>`}
+        ${canEdit?`<div style="position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);border-radius:6px;display:none;align-items:center;justify-content:center;gap:3px;" class="inv-img-overlay">
+          <button onclick="triggerInvImgReplace(${i.id},event)" style="width:20px;height:20px;border-radius:50%;border:none;background:rgba(255,255,255,0.9);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:10px;" title="Replace"><i class="ti ti-camera"></i></button>
+          ${i.img?`<button onclick="removeInvImg(${i.id},event)" style="width:20px;height:20px;border-radius:50%;border:none;background:rgba(229,57,53,0.9);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;" title="Remove"><i class="ti ti-trash"></i></button>`:''}
+        </div>`:''}
+      </div>
+    </td>
     <td><div style="font-weight:500;">${i.name}</div>${i.brand?`<div style="font-size:11px;color:var(--text-muted)">${i.brand}</div>`:''}</td>
     <td style="font-size:12px;color:var(--text-secondary);">${i.category||''}</td>
     <td><code style="font-size:12px;background:var(--surface-1);padding:2px 6px;border-radius:4px;">${i.serial||'—'}</code></td>
@@ -697,6 +807,7 @@ function renderInventory(){
   document.getElementById('i-avail').textContent=inventory.filter(i=>i.status==='Available').length;
   document.getElementById('i-dep').textContent=inventory.filter(i=>i.status==='Deployed').length;
   document.getElementById('i-maint').textContent=inventory.filter(i=>i.status==='Maintenance').length;
+  setTimeout(bindInvImgHover,50);
 }
 function openInvModal(id){
   editingInvId=id||null;resetInvForm();
