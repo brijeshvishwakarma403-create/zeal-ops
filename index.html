@@ -297,20 +297,25 @@ body { font-family: var(--font-sans); background: var(--surface-0); color: var(-
         <i class="ti ti-lock"></i>You don't have permission to view tasks.
       </div>
       <div id="tasks-content">
-        <div class="stats-row">
+        <div class="stats-row" style="grid-template-columns:repeat(5,1fr);">
+          <div class="stat-card"><div class="stat-label">Ideation</div><div class="stat-val" id="t-idea">—</div></div>
+          <div class="stat-card"><div class="stat-label">Waiting Approval</div><div class="stat-val" id="t-wait">—</div></div>
           <div class="stat-card"><div class="stat-label">To do</div><div class="stat-val" id="t-todo">—</div></div>
           <div class="stat-card"><div class="stat-label">In progress</div><div class="stat-val" id="t-prog">—</div></div>
           <div class="stat-card"><div class="stat-label">Done</div><div class="stat-val" id="t-done">—</div></div>
-          <div class="stat-card"><div class="stat-label">High priority</div><div class="stat-val" id="t-high">—</div></div>
         </div>
         <div class="section-header">
           <div class="section-title">Task board</div>
           <button class="add-btn" id="btn-add-task" onclick="openTaskModal()" style="display:none"><i class="ti ti-plus"></i> Add task</button>
         </div>
-        <div class="task-cols">
+        <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
+        <div class="task-cols" style="grid-template-columns:repeat(5,minmax(180px,1fr));min-width:900px;">
+          <div><div class="col-header"><i class="ti ti-bulb"></i> Ideation <span class="col-count" id="cnt-idea">0</span></div><div class="task-col" id="col-idea"></div></div>
+          <div><div class="col-header"><i class="ti ti-clock"></i> Waiting <span class="col-count" id="cnt-wait">0</span></div><div class="task-col" id="col-wait"></div></div>
           <div><div class="col-header"><i class="ti ti-circle-dashed"></i> To do <span class="col-count" id="cnt-todo">0</span></div><div class="task-col" id="col-todo"></div></div>
           <div><div class="col-header"><i class="ti ti-loader"></i> In progress <span class="col-count" id="cnt-prog">0</span></div><div class="task-col" id="col-prog"></div></div>
           <div><div class="col-header"><i class="ti ti-circle-check"></i> Done <span class="col-count" id="cnt-done">0</span></div><div class="task-col" id="col-done"></div></div>
+        </div>
         </div>
       </div>
     </div>
@@ -409,10 +414,19 @@ body { font-family: var(--font-sans); background: var(--surface-0); color: var(-
     <div class="form-grid">
       <div class="form-full"><label class="form-label">Task title *</label><input class="form-input" id="tk-title" placeholder="Confirm LiDAR setup with vendor"></div>
       <div class="form-full"><label class="form-label">Project / event</label><input class="form-input" id="tk-project" placeholder="NPCI GFF Singapore"></div>
-      <div><label class="form-label">Due date</label><input class="form-input" type="date" id="tk-due"></div>
-      <div><label class="form-label">Priority</label><select class="form-select" id="tk-pri"><option>High</option><option>Medium</option><option>Low</option></select></div>
-      <div class="form-full"><label class="form-label">Status</label>
+      <div><label class="form-label">Start / due date</label><input class="form-input" type="date" id="tk-due"></div>
+      <div><label class="form-label">End date</label><input class="form-input" type="date" id="tk-end"></div>
+      <div><label class="form-label">Priority</label>
+        <select class="form-select" id="tk-pri">
+          <option>High</option>
+          <option>Medium</option>
+          <option>Low</option>
+        </select>
+      </div>
+      <div><label class="form-label">Status</label>
         <select class="form-select" id="tk-status">
+          <option>Ideation</option>
+          <option>Waiting For Approval</option>
           <option>To do</option>
           <option>In progress</option>
           <option>Done</option>
@@ -936,49 +950,70 @@ async function loadTasks(){
   try{tasks=await db('GET','tasks?order=created_at.desc');renderTasks();}catch(e){console.error(e);}
 }
 function renderTasks(){
-  const cols={'To do':'col-todo','In progress':'col-prog','Done':'col-done'};
-  const statusOrder=['To do','In progress','Done'];
-  const counts={'To do':0,'In progress':0,'Done':0};
+  const STATUS_ORDER=['Ideation','Waiting For Approval','To do','In progress','Done'];
+  const cols={
+    'Ideation':'col-idea',
+    'Waiting For Approval':'col-wait',
+    'To do':'col-todo',
+    'In progress':'col-prog',
+    'Done':'col-done'
+  };
+  const STATUS_COLOR={
+    'Ideation':['#f0e8fb','#6b28b5'],
+    'Waiting For Approval':['#faeeda','#854f0b'],
+    'To do':['#e6f1fb','#185fa5'],
+    'In progress':['#fff3cd','#856404'],
+    'Done':['#eaf3de','#3b6d11']
+  };
+  const counts={};
+  STATUS_ORDER.forEach(s=>counts[s]=0);
   const canEdit=currentProfile.role==='admin'||currentProfile.can_edit;
-  Object.keys(cols).forEach(s=>document.getElementById(cols[s]).innerHTML='');
+  Object.values(cols).forEach(id=>document.getElementById(id).innerHTML='');
   tasks.forEach(t=>{
     counts[t.status]=(counts[t.status]||0)+1;
     const PC={'High':'pri-high','Medium':'pri-med','Low':'pri-low'};
-    const curIdx=statusOrder.indexOf(t.status);
-    const prevStatus=curIdx>0?statusOrder[curIdx-1]:null;
-    const nextStatus=curIdx<statusOrder.length-1?statusOrder[curIdx+1]:null;
+    const curIdx=STATUS_ORDER.indexOf(t.status);
+    const prevStatus=curIdx>0?STATUS_ORDER[curIdx-1]:null;
+    const nextStatus=curIdx<STATUS_ORDER.length-1?STATUS_ORDER[curIdx+1]:null;
+    const [sbg,sfg]=STATUS_COLOR[t.status]||['#f0efeb','#52514e'];
     const card=document.createElement('div');
     card.className='task-card';
-    card.style.cursor=canEdit?'pointer':'default';
     card.innerHTML=`
-      <div onclick="${canEdit?`openTaskModal(${t.id})`:''}" style="padding-bottom:${canEdit?'0':'0'};">
-        <div class="task-title">${t.title}</div>
-        <div style="font-size:11px;color:var(--text-accent);margin-bottom:4px;">${t.project||''}</div>
-        <div class="task-meta">
+      <div onclick="${canEdit?`openTaskModal(${t.id})`:''}" style="cursor:${canEdit?'pointer':'default'}">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+          <span style="font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;background:${sbg};color:${sfg};">${t.status}</span>
           <span class="task-pri ${PC[t.priority]||''}">${t.priority}</span>
-          ${t.due_date?`<span class="task-due"><i class="ti ti-calendar"></i>${t.due_date}</span>`:''}
+        </div>
+        <div class="task-title">${t.title}</div>
+        <div style="font-size:11px;color:var(--text-accent);margin-top:3px;margin-bottom:4px;">${t.project||''}</div>
+        <div style="display:flex;flex-direction:column;gap:2px;">
+          ${t.due_date?`<span class="task-due"><i class="ti ti-calendar"></i> Due: ${t.due_date}</span>`:''}
+          ${t.end_date?`<span class="task-due" style="color:${new Date(t.end_date)<new Date()&&t.status!=='Done'?'#a32d2d':'var(--text-muted)'}"><i class="ti ti-flag"></i> End: ${t.end_date}</span>`:''}
         </div>
       </div>
       ${canEdit?`
       <div style="display:flex;align-items:center;justify-content:space-between;margin-top:8px;padding-top:8px;border-top:0.5px solid var(--border);">
-        <div style="display:flex;gap:4px;">
-          ${prevStatus?`<button onclick="moveTask(${t.id},'${prevStatus}')" style="padding:3px 8px;border-radius:5px;border:0.5px solid var(--border-strong);background:var(--surface-1);font-size:11px;cursor:pointer;color:var(--text-secondary);font-family:var(--font-sans);display:inline-flex;align-items:center;gap:3px;"><i class="ti ti-arrow-left" style="font-size:11px;"></i>${prevStatus==='To do'?'To do':'In progress'}</button>`:''}
-          ${nextStatus?`<button onclick="moveTask(${t.id},'${nextStatus}')" style="padding:3px 8px;border-radius:5px;border:none;background:${nextStatus==='Done'?'#eaf3de':'var(--bg-accent)'};font-size:11px;cursor:pointer;color:${nextStatus==='Done'?'#3b6d11':'var(--text-accent)'};font-family:var(--font-sans);display:inline-flex;align-items:center;gap:3px;">${nextStatus==='Done'?'Done':'In progress'} <i class="ti ti-arrow-right" style="font-size:11px;"></i></button>`:''}
+        <div style="display:flex;gap:4px;flex-wrap:wrap;">
+          ${prevStatus?`<button onclick="moveTask(${t.id},'${prevStatus}')" style="padding:2px 7px;border-radius:5px;border:0.5px solid var(--border-strong);background:var(--surface-1);font-size:10px;cursor:pointer;color:var(--text-secondary);font-family:var(--font-sans);display:inline-flex;align-items:center;gap:2px;"><i class="ti ti-arrow-left" style="font-size:10px;"></i> Back</button>`:''}
+          ${nextStatus?`<button onclick="moveTask(${t.id},'${nextStatus}')" style="padding:2px 7px;border-radius:5px;border:none;background:var(--bg-accent);font-size:10px;cursor:pointer;color:var(--text-accent);font-family:var(--font-sans);display:inline-flex;align-items:center;gap:2px;">${nextStatus==='Done'?'✓ Done':'Next'} <i class="ti ti-arrow-right" style="font-size:10px;"></i></button>`:''}
         </div>
-        <div style="display:flex;gap:4px;">
-          <button onclick="openTaskModal(${t.id})" style="width:26px;height:26px;border-radius:5px;border:0.5px solid var(--border-strong);background:var(--surface-1);cursor:pointer;color:var(--text-muted);display:inline-flex;align-items:center;justify-content:center;" title="Edit"><i class="ti ti-pencil" style="font-size:13px;"></i></button>
-          <button onclick="deleteTask(${t.id})" style="width:26px;height:26px;border-radius:5px;border:none;background:transparent;cursor:pointer;color:var(--text-muted);display:inline-flex;align-items:center;justify-content:center;" title="Delete"><i class="ti ti-trash" style="font-size:13px;"></i></button>
+        <div style="display:flex;gap:3px;">
+          <button onclick="openTaskModal(${t.id})" style="width:24px;height:24px;border-radius:5px;border:0.5px solid var(--border-strong);background:var(--surface-1);cursor:pointer;color:var(--text-muted);display:inline-flex;align-items:center;justify-content:center;" title="Edit"><i class="ti ti-pencil" style="font-size:12px;"></i></button>
+          <button onclick="deleteTask(${t.id})" style="width:24px;height:24px;border-radius:5px;border:none;background:transparent;cursor:pointer;color:var(--text-muted);display:inline-flex;align-items:center;justify-content:center;" title="Delete"><i class="ti ti-trash" style="font-size:12px;"></i></button>
         </div>
       </div>`:''}`;
-    const colEl=document.getElementById(cols[t.status]);if(colEl)colEl.appendChild(card);
+    const colEl=document.getElementById(cols[t.status]||'col-todo');
+    if(colEl) colEl.appendChild(card);
   });
-  document.getElementById('cnt-todo').textContent=counts['To do']||0;
-  document.getElementById('cnt-prog').textContent=counts['In progress']||0;
-  document.getElementById('cnt-done').textContent=counts['Done']||0;
-  document.getElementById('t-todo').textContent=counts['To do']||0;
-  document.getElementById('t-prog').textContent=counts['In progress']||0;
-  document.getElementById('t-done').textContent=counts['Done']||0;
-  document.getElementById('t-high').textContent=tasks.filter(t=>t.priority==='High').length;
+  // Update counts
+  const cntMap={'Ideation':'idea','Waiting For Approval':'wait','To do':'todo','In progress':'prog','Done':'done'};
+  STATUS_ORDER.forEach(s=>{
+    const key=cntMap[s];
+    const el=document.getElementById('cnt-'+key);
+    const statEl=document.getElementById('t-'+key);
+    if(el) el.textContent=counts[s]||0;
+    if(statEl) statEl.textContent=counts[s]||0;
+  });
 }
 let editingTaskId = null;
 
@@ -987,18 +1022,17 @@ function openTaskModal(id){
   document.getElementById('task-modal-title').textContent = id ? 'Edit task' : 'Add task';
   document.getElementById('task-save-btn').textContent = id ? 'Update task' : 'Save task';
   document.getElementById('task-delete-btn').style.display = id ? 'inline-block' : 'none';
-  // Reset form
-  ['tk-title','tk-project','tk-due'].forEach(el=>document.getElementById(el).value='');
+  ['tk-title','tk-project','tk-due','tk-end'].forEach(el=>document.getElementById(el).value='');
   document.getElementById('tk-pri').value='High';
-  document.getElementById('tk-status').value='To do';
-  // Fill if editing
+  document.getElementById('tk-status').value='Ideation';
   if(id){
     const t=tasks.find(x=>x.id===id); if(!t) return;
     document.getElementById('tk-title').value=t.title||'';
     document.getElementById('tk-project').value=t.project||'';
     document.getElementById('tk-due').value=t.due_date||'';
+    document.getElementById('tk-end').value=t.end_date||'';
     document.getElementById('tk-pri').value=t.priority||'High';
-    document.getElementById('tk-status').value=t.status||'To do';
+    document.getElementById('tk-status').value=t.status||'Ideation';
   }
   document.getElementById('modal-task').classList.add('show');
 }
@@ -1031,6 +1065,7 @@ async function saveTask(){
       title,
       project:document.getElementById('tk-project').value.trim()||null,
       due_date:document.getElementById('tk-due').value||null,
+      end_date:document.getElementById('tk-end').value||null,
       priority:document.getElementById('tk-pri').value,
       status:document.getElementById('tk-status').value
     };
@@ -1039,7 +1074,7 @@ async function saveTask(){
     } else {
       await db('POST','tasks',payload);
     }
-    ['tk-title','tk-project','tk-due'].forEach(id=>document.getElementById(id).value='');
+    ['tk-title','tk-project','tk-due','tk-end'].forEach(id=>document.getElementById(id).value='');
     await loadTasks();closeModal('task');
   }catch(e){alert('Save failed: '+e.message);}
   btn.textContent=editingTaskId?'Update task':'Save task';btn.disabled=false;
