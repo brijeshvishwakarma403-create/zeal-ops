@@ -151,6 +151,7 @@ body { font-family: var(--font-sans); background: var(--surface-0); color: var(-
 .chip { padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 500; cursor: pointer; border: 0.5px solid var(--border-strong); background: var(--surface-1); color: var(--text-secondary); transition: all 0.15s; white-space: nowrap; }
 .chip:hover { background: var(--surface-0); }
 .chip.active { background: #2a78d6; color: #fff; border-color: #2a78d6; }
+.chip-empty { opacity: 0.45; }
 .loading-row { text-align: center; padding: 2rem; color: var(--text-muted); font-size: 13px; }
 .empty-state { text-align: center; padding: 3rem 1rem; color: var(--text-muted); font-size: 13px; }
 .empty-state i { font-size: 32px; display: block; margin-bottom: 8px; }
@@ -247,11 +248,11 @@ body { font-family: var(--font-sans); background: var(--surface-0); color: var(-
         <i class="ti ti-lock"></i>You don't have permission to view vendors.
       </div>
       <div id="vendors-content">
-        <div class="stats-row">
+        <div class="stats-row" id="vendor-stats-row">
           <div class="stat-card"><div class="stat-label">Total vendors</div><div class="stat-val" id="v-total">—</div></div>
-          <div class="stat-card"><div class="stat-label">AV</div><div class="stat-val" id="v-stat-1">—</div></div>
-          <div class="stat-card"><div class="stat-label">VR</div><div class="stat-val" id="v-stat-2">—</div></div>
-          <div class="stat-card"><div class="stat-label">Hardware</div><div class="stat-val" id="v-stat-3">—</div></div>
+          <div class="stat-card"><div class="stat-label" id="v-label-1">—</div><div class="stat-val" id="v-stat-1">—</div></div>
+          <div class="stat-card"><div class="stat-label" id="v-label-2">—</div><div class="stat-val" id="v-stat-2">—</div></div>
+          <div class="stat-card"><div class="stat-label" id="v-label-3">—</div><div class="stat-val" id="v-stat-3">—</div></div>
         </div>
         <div class="section-header">
           <div class="section-title">Vendor directory</div>
@@ -337,9 +338,17 @@ body { font-family: var(--font-sans); background: var(--surface-0); color: var(-
     <div class="modal-title" id="vendor-modal-title">Add vendor</div>
     <div style="margin-bottom:12px;">
       <label class="form-label">Vendor photo / logo</label>
+      <!-- Upload area shown when no image -->
       <div class="img-upload-area" onclick="document.getElementById('v-img-input').click()" id="v-img-area"><i class="ti ti-camera"></i><span>Click to upload</span></div>
-      <img id="v-img-preview" class="img-preview" alt="">
-      <input type="file" id="v-img-input" accept="image/*" style="display:none" onchange="previewImage('v-img-input','v-img-preview','v-img-area')">
+      <!-- Preview shown when image exists -->
+      <div id="v-img-preview-wrap" style="display:none;position:relative;border-radius:var(--radius);overflow:hidden;">
+        <img id="v-img-preview" style="width:100%;height:120px;object-fit:cover;display:block;" alt="">
+        <div style="position:absolute;top:8px;right:8px;display:flex;gap:6px;">
+          <button onclick="document.getElementById('v-img-input').click()" style="padding:5px 10px;border-radius:6px;border:none;background:rgba(255,255,255,0.92);font-size:12px;cursor:pointer;display:flex;align-items:center;gap:4px;font-family:var(--font-sans);"><i class="ti ti-camera" style="font-size:13px;"></i> Replace</button>
+          <button onclick="clearVendorImg()" style="padding:5px 10px;border-radius:6px;border:none;background:rgba(229,57,53,0.9);color:#fff;font-size:12px;cursor:pointer;display:flex;align-items:center;gap:4px;font-family:var(--font-sans);"><i class="ti ti-trash" style="font-size:13px;"></i> Remove</button>
+        </div>
+      </div>
+      <input type="file" id="v-img-input" accept="image/*" style="display:none" onchange="previewVendorImage()">
     </div>
     <div class="form-grid">
       <div class="form-full"><label class="form-label">Company name *</label><input class="form-input" id="v-name" placeholder="AV Pro Solutions"></div>
@@ -366,8 +375,14 @@ body { font-family: var(--font-sans); background: var(--surface-0); color: var(-
     <div style="margin-bottom:12px;">
       <label class="form-label">Equipment photo</label>
       <div class="img-upload-area" onclick="document.getElementById('i-img-input').click()" id="i-img-area"><i class="ti ti-camera"></i><span>Click to upload</span></div>
-      <img id="i-img-preview" class="img-preview" alt="">
-      <input type="file" id="i-img-input" accept="image/*" style="display:none" onchange="previewImage('i-img-input','i-img-preview','i-img-area')">
+      <div id="i-img-preview-wrap" style="display:none;position:relative;border-radius:var(--radius);overflow:hidden;">
+        <img id="i-img-preview" style="width:100%;height:120px;object-fit:cover;display:block;" alt="">
+        <div style="position:absolute;top:8px;right:8px;display:flex;gap:6px;">
+          <button onclick="document.getElementById('i-img-input').click()" style="padding:5px 10px;border-radius:6px;border:none;background:rgba(255,255,255,0.92);font-size:12px;cursor:pointer;display:flex;align-items:center;gap:4px;font-family:var(--font-sans);"><i class="ti ti-camera" style="font-size:13px;"></i> Replace</button>
+          <button onclick="clearInvImg()" style="padding:5px 10px;border-radius:6px;border:none;background:rgba(229,57,53,0.9);color:#fff;font-size:12px;cursor:pointer;display:flex;align-items:center;gap:4px;font-family:var(--font-sans);"><i class="ti ti-trash" style="font-size:13px;"></i> Remove</button>
+        </div>
+      </div>
+      <input type="file" id="i-img-input" accept="image/*" style="display:none" onchange="previewInvImage()">
     </div>
     <div class="form-grid">
       <div class="form-full"><label class="form-label">Item name *</label><input class="form-input" id="i-name" placeholder="LiDAR Scanner L1"></div>
@@ -567,31 +582,38 @@ function getBadgeStyle(cat, list) {
 let activeVendorFilter='All', activeInvFilter='All';
 
 function buildChips() {
-  // Vendor chips with counts
-  const vCounts = {};
-  VCATS.forEach(c => vCounts[c] = vendors.filter(v=>v.category===c).length);
-  document.getElementById('vendor-chips').innerHTML =
-    `<span class="chip active" onclick="setVendorFilter('All')">All <span style="opacity:0.7;font-size:10px;">${vendors.length}</span></span>` +
-    VCATS.filter(c=>vCounts[c]>0).map(c=>`<span class="chip" onclick="setVendorFilter('${c}')">${c} <span style="opacity:0.7;font-size:10px;">${vCounts[c]}</span></span>`).join('') +
-    VCATS.filter(c=>vCounts[c]===0).map(c=>`<span class="chip" onclick="setVendorFilter('${c}')" style="opacity:0.5;">${c}</span>`).join('');
+  // Get ALL unique categories from actual data + VCATS defaults
+  const allVCats = [...new Set([...VCATS, ...vendors.map(v=>v.category).filter(Boolean)])];
+  const allICats = [...new Set([...ICATS, ...inventory.map(i=>i.category).filter(Boolean)])];
 
-  // Inventory chips — status + type with counts
+  // Vendor chips — show all categories with live counts
+  const vCounts = {};
+  allVCats.forEach(c => vCounts[c] = vendors.filter(v=>v.category===c).length);
+  document.getElementById('vendor-chips').innerHTML =
+    `<span class="chip active" onclick="setVendorFilter('All')">All <span style="opacity:0.65;font-size:10px;">${vendors.length}</span></span>` +
+    allVCats.map(c=>`<span class="chip${vCounts[c]===0?' chip-empty':''}" onclick="setVendorFilter('${c}')">${c}${vCounts[c]>0?` <span style="opacity:0.65;font-size:10px;">${vCounts[c]}</span>`:''}</span>`).join('');
+
+  // Inventory chips — status first, then all types
   const iStatusCounts = { 'Available': inventory.filter(i=>i.status==='Available').length, 'Deployed': inventory.filter(i=>i.status==='Deployed').length, 'Maintenance': inventory.filter(i=>i.status==='Maintenance').length };
   const iCatCounts = {};
-  ICATS.forEach(c => iCatCounts[c] = inventory.filter(i=>i.category===c).length);
+  allICats.forEach(c => iCatCounts[c] = inventory.filter(i=>i.category===c).length);
   document.getElementById('inv-chips').innerHTML =
-    `<span class="chip active" onclick="setInvFilter('All')">All <span style="opacity:0.7;font-size:10px;">${inventory.length}</span></span>` +
-    ['Available','Deployed','Maintenance'].map(s=>`<span class="chip" onclick="setInvFilter('${s}')" style="${iStatusCounts[s]===0?'opacity:0.5;':''}">${s} <span style="opacity:0.7;font-size:10px;">${iStatusCounts[s]}</span></span>`).join('') +
-    `<span style="display:inline-block;width:1px;height:16px;background:var(--border-strong);margin:0 2px;vertical-align:middle;"></span>` +
-    ICATS.filter(c=>iCatCounts[c]>0).map(c=>`<span class="chip" onclick="setInvFilter('${c}')">${c} <span style="opacity:0.7;font-size:10px;">${iCatCounts[c]}</span></span>`).join('') +
-    ICATS.filter(c=>iCatCounts[c]===0).map(c=>`<span class="chip" onclick="setInvFilter('${c}')" style="opacity:0.5;">${c}</span>`).join('');
+    `<span class="chip active" onclick="setInvFilter('All')">All <span style="opacity:0.65;font-size:10px;">${inventory.length}</span></span>` +
+    ['Available','Deployed','Maintenance'].map(s=>`<span class="chip" onclick="setInvFilter('${s}')">${s} <span style="opacity:0.65;font-size:10px;">${iStatusCounts[s]}</span></span>`).join('') +
+    `<span style="display:inline-block;width:1px;height:16px;background:var(--border-strong);margin:0 3px;vertical-align:middle;"></span>` +
+    allICats.map(c=>`<span class="chip${iCatCounts[c]===0?' chip-empty':''}" onclick="setInvFilter('${c}')">${c}${iCatCounts[c]>0?` <span style="opacity:0.65;font-size:10px;">${iCatCounts[c]}</span>`:''}</span>`).join('');
 
   // Re-apply active states
-  document.querySelectorAll('#vendor-chips .chip').forEach(c=>c.classList.toggle('active',c.textContent.trim().startsWith(activeVendorFilter==='All'?'All':activeVendorFilter)));
-  document.querySelectorAll('#inv-chips .chip').forEach(c=>c.classList.toggle('active',c.textContent.trim().startsWith(activeInvFilter==='All'?'All':activeInvFilter)));
+  document.querySelectorAll('#vendor-chips .chip').forEach(c=>{
+    const label=c.childNodes[0].textContent.trim();
+    c.classList.toggle('active', activeVendorFilter==='All'?label==='All':label===activeVendorFilter);
+  });
+  document.querySelectorAll('#inv-chips .chip').forEach(c=>{
+    const label=c.childNodes[0].textContent.trim();
+    c.classList.toggle('active', activeInvFilter==='All'?label==='All':label===activeInvFilter);
+  });
 }
 
-// Show/hide inventory image overlay on row hover
 function bindInvImgHover() {
   document.querySelectorAll('.inv-img-overlay').forEach(el => {
     const parent = el.parentElement;
@@ -602,16 +624,21 @@ function bindInvImgHover() {
 
 function setVendorFilter(f) {
   activeVendorFilter=f;
-  document.querySelectorAll('#vendor-chips .chip').forEach(c=>c.classList.toggle('active',c.textContent.trim()===f));
+  document.querySelectorAll('#vendor-chips .chip').forEach(c=>{
+    const label=c.childNodes[0].textContent.trim();
+    c.classList.toggle('active', f==='All'?label==='All':label===f);
+  });
   renderVendors();
 }
 function setInvFilter(f) {
   activeInvFilter=f;
-  document.querySelectorAll('#inv-chips .chip').forEach(c=>c.classList.toggle('active',c.textContent.trim()===f));
+  document.querySelectorAll('#inv-chips .chip').forEach(c=>{
+    const label=c.childNodes[0].textContent.trim();
+    c.classList.toggle('active', f==='All'?label==='All':label===f);
+  });
   renderInventory();
 }
 
-// ── SYNC STATUS ───────────────────────────────────────────────────
 function setSync(state,msg) {
   const el=document.getElementById('sync-status');
   el.className=`sync-status sync-${state}`;
@@ -626,15 +653,47 @@ function switchTab(tab) {
   if(tab==='users') loadUsers();
 }
 
-function previewImage(inputId,previewId,areaId) {
-  const file=document.getElementById(inputId).files[0];if(!file)return;
+// ── IMAGE PREVIEW FUNCTIONS ───────────────────────────────────────
+function previewVendorImage() {
+  const file=document.getElementById('v-img-input').files[0];if(!file)return;
   const reader=new FileReader();
-  reader.onload=e=>{const p=document.getElementById(previewId);p.src=e.target.result;p.style.display='block';document.getElementById(areaId).style.display='none';};
+  reader.onload=e=>{
+    document.getElementById('v-img-preview').src=e.target.result;
+    document.getElementById('v-img-preview-wrap').style.display='block';
+    document.getElementById('v-img-area').style.display='none';
+  };
   reader.readAsDataURL(file);
 }
+function clearVendorImg() {
+  document.getElementById('v-img-preview-wrap').style.display='none';
+  document.getElementById('v-img-area').style.display='block';
+  document.getElementById('v-img-preview').src='';
+  document.getElementById('v-img-input').value='';
+  // Mark as deleted
+  document.getElementById('v-img-input').dataset.cleared='true';
+}
+function previewInvImage() {
+  const file=document.getElementById('i-img-input').files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    document.getElementById('i-img-preview').src=e.target.result;
+    document.getElementById('i-img-preview-wrap').style.display='block';
+    document.getElementById('i-img-area').style.display='none';
+  };
+  reader.readAsDataURL(file);
+}
+function clearInvImg() {
+  document.getElementById('i-img-preview-wrap').style.display='none';
+  document.getElementById('i-img-area').style.display='block';
+  document.getElementById('i-img-preview').src='';
+  document.getElementById('i-img-input').value='';
+  document.getElementById('i-img-input').dataset.cleared='true';
+}
+
 function getImgData(inputId) {
   const input=document.getElementById(inputId);
-  if(!input.files||!input.files[0])return Promise.resolve(null);
+  if(input.dataset.cleared==='true') return Promise.resolve('CLEARED');
+  if(!input.files||!input.files[0]) return Promise.resolve(null);
   return new Promise(resolve=>{const r=new FileReader();r.onload=e=>resolve(e.target.result);r.readAsDataURL(input.files[0]);});
 }
 
@@ -661,12 +720,8 @@ function renderVendors() {
     const imgContent = v.img
       ? `<img src="${v.img}" style="width:100%;height:100%;object-fit:cover;" alt="${v.name}">`
       : `<div class="vendor-img-placeholder"><i class="ti ti-building-store"></i><span>${v.category||''}</span></div>`;
-    const imgActions = canEdit ? `<div class="vendor-img-actions">
-      <button class="img-action-btn" onclick="triggerVendorImgReplace(${v.id},event)" title="Replace image"><i class="ti ti-camera"></i></button>
-      ${v.img?`<button class="img-action-btn danger" onclick="removeVendorImg(${v.id},event)" title="Remove image"><i class="ti ti-trash"></i></button>`:''}
-    </div>` : '';
     return `<div class="vendor-card">
-      <div class="vendor-img-wrap">${imgContent}${imgActions}</div>
+      <div class="vendor-img-wrap">${imgContent}</div>
       <div class="vendor-body">
         <div class="vendor-top">
           <div style="min-width:0;flex:1;"><div class="vendor-name">${v.name}</div><div class="vendor-sub">${v.contact||''}</div></div>
@@ -682,9 +737,15 @@ function renderVendors() {
     </div>`;
   }).join('');
   document.getElementById('v-total').textContent=vendors.length;
-  document.getElementById('v-stat-1').textContent=vendors.filter(v=>v.category===VCATS[0]).length;
-  document.getElementById('v-stat-2').textContent=vendors.filter(v=>v.category===VCATS[1]).length;
-  document.getElementById('v-stat-3').textContent=vendors.filter(v=>v.category===VCATS[2]).length;
+  // Dynamically show top 3 categories by count
+  const catCounts = {};
+  vendors.forEach(v=>{ if(v.category) catCounts[v.category]=(catCounts[v.category]||0)+1; });
+  const top3 = Object.entries(catCounts).sort((a,b)=>b[1]-a[1]).slice(0,3);
+  for(let i=1;i<=3;i++){
+    const [cat,count] = top3[i-1]||['—',0];
+    document.getElementById(`v-label-${i}`).textContent = cat;
+    document.getElementById(`v-stat-${i}`).textContent = count||'0';
+  }
 }
 function openVendorModal(id) {
   editingVendorId=id||null;resetVendorForm();
@@ -695,13 +756,21 @@ function openVendorModal(id) {
     document.getElementById('v-phone').value=v.phone||'';document.getElementById('v-email').value=v.email||'';
     document.getElementById('v-cat').value=v.category||VCATS[0];document.getElementById('v-city').value=v.city||'';
     document.getElementById('v-address').value=v.address||'';document.getElementById('v-notes').value=v.notes||'';
-    if(v.img){document.getElementById('v-img-preview').src=v.img;document.getElementById('v-img-preview').style.display='block';document.getElementById('v-img-area').style.display='none';}
+    if(v.img){
+      document.getElementById('v-img-preview').src=v.img;
+      document.getElementById('v-img-preview-wrap').style.display='block';
+      document.getElementById('v-img-area').style.display='none';
+    }
   }
   document.getElementById('modal-vendor').classList.add('show');
 }
 function resetVendorForm(){
   ['v-name','v-contact','v-phone','v-email','v-city','v-address','v-notes'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('v-img-preview').style.display='none';document.getElementById('v-img-area').style.display='block';document.getElementById('v-img-input').value='';
+  document.getElementById('v-img-preview-wrap').style.display='none';
+  document.getElementById('v-img-area').style.display='block';
+  document.getElementById('v-img-preview').src='';
+  document.getElementById('v-img-input').value='';
+  document.getElementById('v-img-input').dataset.cleared='false';
 }
 
 // Inline image replace on vendor card
@@ -757,9 +826,10 @@ async function saveVendor(){
   const name=document.getElementById('v-name').value.trim();if(!name){alert('Company name required');return;}
   const btn=document.getElementById('vendor-save-btn');btn.textContent='Saving…';btn.disabled=true;
   try{
-    const imgData=await getImgData('v-img-input');
-    const payload={name,contact:document.getElementById('v-contact').value.trim()||null,phone:document.getElementById('v-phone').value.trim()||null,email:document.getElementById('v-email').value.trim()||null,category:document.getElementById('v-cat').value,city:document.getElementById('v-city').value.trim()||null,address:document.getElementById('v-address').value.trim()||null,notes:document.getElementById('v-notes').value.trim()||null};
-    if(imgData)payload.img=imgData;
+    const imgData = await getImgData('v-img-input');
+    const payload = { name, contact:document.getElementById('v-contact').value.trim()||null, phone:document.getElementById('v-phone').value.trim()||null, email:document.getElementById('v-email').value.trim()||null, category:document.getElementById('v-cat').value, city:document.getElementById('v-city').value.trim()||null, address:document.getElementById('v-address').value.trim()||null, notes:document.getElementById('v-notes').value.trim()||null };
+    if(imgData==='CLEARED') payload.img=null;
+    else if(imgData) payload.img=imgData;
     editingVendorId?await db('PATCH','vendors',payload,editingVendorId):await db('POST','vendors',payload);
     await loadVendors();closeModal('vendor');
   }catch(e){alert('Save failed: '+e.message);}
@@ -818,14 +888,22 @@ function openInvModal(id){
     document.getElementById('i-serial').value=item.serial||'';document.getElementById('i-brand').value=item.brand||'';
     document.getElementById('i-date').value=item.purchase_date||'';document.getElementById('i-status').value=item.status||'Available';
     document.getElementById('i-project').value=item.project||'';document.getElementById('i-notes').value=item.notes||'';
-    if(item.img){document.getElementById('i-img-preview').src=item.img;document.getElementById('i-img-preview').style.display='block';document.getElementById('i-img-area').style.display='none';}
+    if(item.img){
+      document.getElementById('i-img-preview').src=item.img;
+      document.getElementById('i-img-preview-wrap').style.display='block';
+      document.getElementById('i-img-area').style.display='none';
+    }
   }
   document.getElementById('modal-inventory').classList.add('show');
 }
 function resetInvForm(){
   ['i-name','i-serial','i-brand','i-date','i-project','i-notes'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('i-status').value='Available';document.getElementById('i-img-preview').style.display='none';
-  document.getElementById('i-img-area').style.display='block';document.getElementById('i-img-input').value='';
+  document.getElementById('i-status').value='Available';
+  document.getElementById('i-img-preview-wrap').style.display='none';
+  document.getElementById('i-img-area').style.display='block';
+  document.getElementById('i-img-preview').src='';
+  document.getElementById('i-img-input').value='';
+  document.getElementById('i-img-input').dataset.cleared='false';
 }
 async function saveInventory(){
   const name=document.getElementById('i-name').value.trim();if(!name){alert('Item name required');return;}
@@ -833,7 +911,8 @@ async function saveInventory(){
   try{
     const imgData=await getImgData('i-img-input');
     const payload={name,category:document.getElementById('i-cat').value,serial:document.getElementById('i-serial').value.trim()||null,brand:document.getElementById('i-brand').value.trim()||null,purchase_date:document.getElementById('i-date').value||null,status:document.getElementById('i-status').value,project:document.getElementById('i-project').value.trim()||null,notes:document.getElementById('i-notes').value.trim()||null};
-    if(imgData)payload.img=imgData;
+    if(imgData==='CLEARED') payload.img=null;
+    else if(imgData) payload.img=imgData;
     editingInvId?await db('PATCH','inventory',payload,editingInvId):await db('POST','inventory',payload);
     await loadInventory();closeModal('inventory');
   }catch(e){alert('Save failed: '+e.message);}
